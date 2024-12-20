@@ -93,15 +93,21 @@
 
   <build>
     <plugins>
+        <!-- Cấu hình Maven Compiler Plugin để hỗ trợ Java 23 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version> <!-- Sử dụng phiên bản mới nhất -->
+        <configuration>
+          <release>23</release> <!-- Đặt release version là 23 -->
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <source>23</source>
-          <target>23</target>
-        </configuration>
       </plugin>
     </plugins>
+
   </build>
 
 </project>
