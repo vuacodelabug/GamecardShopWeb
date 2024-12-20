@@ -1,0 +1,90 @@
+
+
+.ctm-text-capitalize-first {
+  text-transform: lowercase;
+  /* Hạ tất cả chữ xuống chữ thường */
+}
+
+.ctm-text-capitalize-first:first-letter {
+  text-transform: uppercase;
+  /* Chỉ viết hoa chữ cái đầu tiên */
+}
+
+
+/* logo nàh phát hành */
+
+.ctm-image-container {
+  width: 100%;
+  height: 140px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.ctm-image-container img {
+  width: 80%;
+  /* Ảnh sẽ chiếm 80% chiều rộng của div */
+  height: auto;
+  /* Giữ tỷ lệ chiều cao và chiều rộng của ảnh */
+  object-fit: contain;
+  /* Đảm bảo ảnh vừa khung mà không bị cắt */
+  border-radius: 8px;
+  /* Bo tròn góc ảnh */
+}
+
+
+/* giới hạn dòng cho text */
+.ctm-card-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 1.2em;
+}
+
+/* khung ảnh logo */
+.previewImage {
+  width: 60%;
+  height: auto;
+  overflow: hidden;
+  display: none;
+  margin: 0 auto;
+}
+
+
+
+/* CSS cho phần in ấn */
+@media print {
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  table th,
+  table td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+  }
+
+  /* Ẩn các yếu tố không cần thiết khi in, như nút và các phần không muốn in */
+  .modal-footer,
+  .btn,
+  .navbar,
+  .no-print {
+    display: none;
+  }
+}
+
+
+/* css điện thoại */
+@media (max-width: 767px) {
+  .ctm-image-container {
+    height: 110px;
+  }
+}

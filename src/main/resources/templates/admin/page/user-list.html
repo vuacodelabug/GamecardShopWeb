@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html layout:decorate="admin/index">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách người dùng</title>
+</head>
+
+<body>
+    <div class="container-fluid" layout:fragment="content">
+        <div class="">
+            <div class="card">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title ctm-text-capitalize-first mb-0 flex-grow-1">Quản Lý Người Dùng</h4>
+                    <div class="flex-shrink-0">
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAddUser">Thêm người
+                            dùng</button>
+                    </div>
+                </div><!-- end card header -->
+
+                <div class="card-body">
+                    <!-- Tìm kiếm -->
+                    <form action="/admin/user" method="get">
+                        <div class="row my-4">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <!-- Trường Tìm Kiếm Văn Bản -->
+                                <input type="text" class="form-control form-control w-25" name="search_profilename"
+                                       placeholder="Nhập tên người dùng"
+                                       th:value="${search_profilename != null ? search_profilename : ''}">
+                            
+                                <!-- Trường Chọn -->
+                                <select class="form-select form-select w-auto" name="search_userrole">
+                                    <option value="">Tất cả</option>
+                                    <option value="user" th:selected="${search_userrole != null && search_userrole == 'user'}">Người Dùng</option>
+                                    <option value="admin" th:selected="${search_userrole != null && search_userrole == 'admin'}">Quản Trị Viên</option>
+                                </select>
+                            
+                                <!-- Nút Tìm Kiếm -->
+                                <button type="submit" class="btn btn-success">Tìm Kiếm</button>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    
+                    
+
+                    <!-- Bảng Danh Sách Người Dùng -->
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle  table-striped table-bordered table-nowrap">
+                            <thead class="">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Tên</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Quyền Hạn</th>
+                                    <th scope="col">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Lặp qua các người dùng -->
+                                <tr th:each="user : ${users}" th:user-id="${user.id}">
+                                    <td th:text="${user.id}"></td>
+                                    <td th:text="${user.profile != null ? user.profile.name : 'Người dùng'}"></td>
+                                    <td th:text="${user.email}"></td>
+                                    <td>
+                                        <select class="form-control btn-updateRoleUser" th:data-id="${user.id}">
+                                            <option value="user" th:selected="${user.role == 'user'}">Người Dùng
+                                            </option>
+                                            <option value="admin" th:selected="${user.role == 'admin'}">Quản Trị Viên
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info btn-modalInfoUser" th:data-id="${user.id}">Chi
+                                            tiết</button>
+                                        <button class="btn btn-sm btn-danger btn-deleteUser"
+                                            th:data-id="${user.id}">Xóa</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                   
+
+                </div><!-- end card-body -->
+            </div><!-- end card -->
+        </div>
+
+        <!-- Modal form Thêm Người Dùng -->
+        <div class="modal fade" id="modalAddUser" tabindex="-1" aria-labelledby="modalAddUserLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addUserModalLabel">Thêm Người Dùng</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="user/add" method="post">
+                            <!-- Email -->
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email đăng nhập<span
+                                        class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="email" placeholder="Nhập email"
+                                    name="user_email" required>
+                                <div class="invalid-feedback">Định dạng email không chính xác. Ví dụ:
+                                    example@domain.com.</div>
+                            </div>
+                            <!-- Quyền Hạn -->
+                            <div class="mb-3">
+                                <label for="role" class="form-label">Quyền Hạn <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-select" id="role" name="user_role" required>
+                                    <option value="user">Người dùng</option>
+                                    <option value="admin">Quản trị viên</option>
+                                </select>
+                            </div>
+                            <hr>
+                            <h6 class="mb-3">Thông tin cá nhân</h6>
+                            <div class="row">
+                                <div class="col-md-8 mb-3">
+                                    <label for="name" class="form-label">Họ và tên<span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="name" name="profile_name"
+                                        placeholder="Nhập tên đầy đủ">
+
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="gender" class="form-label">Giới tính</label>
+                                    <select class="form-select" id="gender" name="profile_gender" required>
+                                        <option value="Nam">Nam</option>
+                                        <option value="Nữ">Nữ</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="dateOfBirth" class="form-label">Ngày Sinh</label>
+                                    <input type="date" class="form-control" id="dateOfBirth" name="profile_dateOfBirth">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="phone" class="form-label">Số Điện Thoại</label>
+                                    <input type="text" class="form-control" id="phone" name="profile_phone"
+                                        placeholder="Nhập số điện thoại">
+                                    <div class="invalid-feedback">Định dạng không hợp lệ</div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Nút Lưu -->
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Chi Tiết Người Dùng -->
+        <div class="modal fade" id="modalInfoUser" tabindex="-1" aria-labelledby="imfProfileModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="imfProfileModalLabel">Chi Tiết Thông Tin Cá Nhân</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="userDetailContent">
+                        <div class="row">
+                            <div class="col-md-8 mb-3">
+                                <label for="profile_name" class="form-label">Họ và tên<span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="profile_name" readonly>
+
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="gender" class="form-label">Giới tính</label>
+                                <select class="form-select" id="profile_gender" name="profile_gender" disabled>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="user_email" class="form-label">Email đăng nhập</label>
+                            <input type="text" class="form-control" id="user_email" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="profile_phone" class="form-label">Số Điện Thoại</label>
+                            <input type="text" class="form-control" id="profile_phone" readonly>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="profile_dob" class="form-label">Ngày Sinh</label>
+                            <input type="text" class="form-control" id="profile_dob" readonly>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- container-fluid -->
+
+    <script layout:fragment="js">
+        $(document).ready(function () {
+            // Bắt sự kiện khi người dùng nhấn nút "Chi tiết"
+            $(".btn-modalInfoUser").on("click", function () {
+                userId = $(this).data("id");
+                showUserDetail(userId)
+            });
+
+            // Bắt sự kiện khi người dùng thay đổi quyền hạn
+            $(".btn-updateRoleUser").on("change", function () {
+                userId = $(this).data("id");
+                role = $(this).val();
+                // Hỏi CHẮC CHẮN RẰNG BẠN MUỐN đổi thành quyền này
+                if (confirm(`Bạn có chắc chắn muốn đổi thành ${role}?`)) {
+                    updateRoleUser(userId, role);
+                }
+            });
+
+            // bắt sự kiện xóa user
+            $(".btn-deleteUser").on("click", function () {
+                userId = $(this).data("id");
+                if (confirm("Bạn có chắc chắn muốn xóa người dùng này?")) {
+                    deleteUser(userId);
+                };
+            });
+
+        });
+
+
+
+        function showUserDetail(userId) {
+            $.ajax({
+                url: '/admin/user/api/detail/' + userId,
+                method: 'GET',
+                success: function (data) {
+                    // Cập nhật thông tin vào modal
+                    $('#profile_name').val(data.profile.name);
+                    $('#user_email').val(data.email);
+                    $('#profile_phone').val(data.profile.phone);
+                    $('#profile_dob').val(data.profile.dateOfBirth);
+                    $('#profile_gender').val(data.profile.gender);
+                    $('#modalInfoUser').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    alert("Không thể tải thông tin người dùng.");
+                }
+            });
+        }
+
+        function updateRoleUser(userId, role) {
+            $.ajax({
+                url: '/admin/user/api/update-role/' + userId,
+                method: 'post',
+                data: {
+                    role: role
+                },
+
+                success: function () {
+                    alert("Cập nhật quyền hạn người dùng thành công.");
+                },
+                error: function (xhr, status, error) {
+                    alert("Không thể cập nhật quyền hạn người dùng.");
+                }
+            });
+        }
+
+        function deleteUser(userId) {
+            $.ajax({
+                url: '/admin/user/api/delete/' + userId,
+                method: 'post',
+                success: function () {
+                    alert("Xóa người dùng thành công.");
+                    $(`[user-id='${userId}']`).remove();
+                },
+                error: function (xhr, status, error) {
+                    alert("Không thể xóa người dùng.");
+                }
+            });
+        };
+
+    </script>
+</body>
+
+</html>

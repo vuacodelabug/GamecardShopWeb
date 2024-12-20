@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html layout:decorate="admin/index">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container-fluid" layout:fragment="content">
+        <div class="card">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h4 class="card-title mb-0">Báo cáo Doanh thu</h4>
+                <!-- Nút In Báo Cáo -->
+                <button class="btn btn-primary btn-sm" onclick="printReport()">In Báo Cáo</button>
+            </div>
+            <div class="card-body" id="report-content">
+                <table class="table table-bordered table-nowrap">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Ngày</th>
+                            <th>Tổng Doanh Thu</th>
+                            <th>Số Giao Dịch</th>
+                            <th class="w-25">Chi Tiết</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dữ liệu Doanh thu -->
+                        <tr>
+                            <td>1</td>
+                            <td>2024-11-15</td>
+                            <td>10,000,000 VNĐ</td>
+                            <td>50</td>
+                            <td><button class="btn btn-sm btn-info" data-bs-toggle="modal"
+                                    data-bs-target="#oderDetailModal">Chi tiết</button>
+                                <button type="button" class="btn btn-primary btn-sm" id="printReportBtn">In Báo
+                                    Cáo</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>2024-11-16</td>
+                            <td>12,500,000 VNĐ</td>
+                            <td>60</td>
+                            <td><button class="btn btn-sm btn-info" data-bs-toggle="modal"
+                                    data-bs-target="#oderDetailModal">Chi tiết</button>
+                                <button type="button" class="btn btn-primary btn-sm" id="printReportBtn">In Báo
+                                    Cáo</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Modal Xem Chi Tiết Giao Dịch -->
+        <div class="modal fade" id="oderDetailModal" tabindex="-1" aria-labelledby="oderDetailModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="oderDetailModalLabel">Chi Tiết Giao Dịch
+                            Ngày: <span id="transactionDate"></span></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Báo Cáo Tổng Quan -->
+                        <div class="mb-4">
+                            <h5 class="text-center">Báo Cáo Tổng Quan</h5>
+                            <ul class="list-group">
+                                <li class="list-group-item"><strong>Ngày:</strong> <span
+                                        id="reportDate">2024-11-15</span></li>
+                                <li class="list-group-item"><strong>Tổng Doanh Thu:</strong> <span
+                                        id="totalRevenue">10,000,000 VNĐ</span></li>
+                                <li class="list-group-item"><strong>Số Giao Dịch:</strong> <span
+                                        id="transactionCount">50</span></li>
+                            </ul>
+                        </div>
+
+                        <!-- Bảng Chi Tiết Giao Dịch -->
+                        <div class="table-responsive">
+                            <h5 class="text-center mt-4">Chi Tiết Giao Dịch</h5>
+                            <table class="table table-bordered table-nowrap" id="transactionTable">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Khách hàng</th>
+                                        <th>Thẻ Game</th>
+                                        <th>Số Tiền</th>
+                                        <th>Ngày Giờ</th>
+                                        <th>Trạng Thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transactionDetailsBody">
+                                    <!-- Các Dữ Liệu Giao Dịch Sẽ Được Lặp Qua Từ Cơ Sở Dữ Liệu -->
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Nguyễn Văn A</td>
+                                        <td>Gemage - 100K</td>
+                                        <td>100,000 VND</td>
+                                        <td>2024-11-18 10:30</td>
+                                        <td><span class="badge bg-success">Hoàn Thành</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Trần Thị B</td>
+                                        <td>Gemage - 100K</td>
+                                        <td>200,000 VND</td>
+                                        <td>2024-11-18 11:15</td>
+                                        <td><span class="badge bg-warning">Chờ Xử Lý</span></td>
+                                    </tr>
+                                    <!-- Thêm các giao dịch khác tại đây -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- Nút In Báo Cáo -->
+                        <button type="button" class="btn btn-primary" id="printReportBtn">In Báo
+                            Cáo</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            /* CSS cho phần in ấn */
+            @media print {
+
+                /* Đảm bảo bảng có viền */
+                table {
+                    border-collapse: collapse !important;
+                    /* Kết hợp các viền vào nhau */
+                    width: 100% !important;
+                }
+
+                table th,
+                table td {
+                    border: 1px solid black !important;
+                    /* Viền đen cho các ô */
+                    padding: 8px !important;
+                    text-align: left;
+                }
+
+                /* Ẩn các phần không cần thiết khi in */
+                .modal-footer,
+                .btn,
+                .navbar,
+                .no-print {
+                    display: none !important;
+                }
+            }
+        </style>
+        <script>
+            // mở modal chi tiết giao dịch
+            function printReport() {
+                const content = document.getElementById('report-content').innerHTML;
+                const originalContent = document.body.innerHTML;
+
+                document.body.innerHTML = content; // Chỉ hiển thị nội dung cần in
+                window.print();
+                document.body.innerHTML = originalContent; // Phục hồi nội dung ban đầu
+                location.reload(); // Tải lại trang để khôi phục các chức năng
+            }
+
+            // in báo cáo chi tiết
+            document.getElementById("printReportBtn").addEventListener("click", function () {
+                printReport();
+            });
+
+            function printReport() {
+                // Lấy nội dung báo cáo tổng quan và bảng chi tiết
+                const reportDate = document.getElementById("reportDate").innerHTML;
+                const totalRevenue = document.getElementById("totalRevenue").innerHTML;
+                const transactionCount = document.getElementById("transactionCount").innerHTML;
+                const transactionTable = document.getElementById("transactionTable").outerHTML;
+
+                // Tạo nội dung báo cáo để in
+                const printContent = `
+                        <div style="font-family: Arial, sans-serif; padding: 20px;">
+                            <h2 style="text-align: center;">Báo Cáo Giao Dịch - Ngày ${reportDate}</h2>
+                            <div style="margin-bottom: 20px;">
+                                <ul>
+                                    <li><strong>Ngày:</strong> ${reportDate}</li>
+                                    <li><strong>Tổng Doanh Thu:</strong> ${totalRevenue}</li>
+                                    <li><strong>Số Giao Dịch:</strong> ${transactionCount}</li>
+                                </ul>
+                            </div>
+                            <h3>Chi Tiết Giao Dịch</h3>
+                            ${transactionTable}
+                        </div>
+                    `;
+
+                // Mở cửa sổ in và in nội dung
+                const printWindow = window.open('', '', 'height=500, width=800');
+                printWindow.document.write('<html><head><title>Báo Cáo Giao Dịch</title></head><body>');
+                printWindow.document.write(printContent);
+                printWindow.document.write('</body></html>');
+                printWindow.document.close();
+                printWindow.print();
+            }
+
+        </script>
+
+    </div><!-- container-fluid -->
+
+    <script layout:fragment="js">
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html layout:decorate="admin/index">
+
+<head>
+    <title th:text="${pageTitle}">Default Title</title>
+
+    <title>Shop thẻ game</title>
+  
+</head>
+
+<body>
+
+    <div class="container-fluid" layout:fragment="content">
+
+        <h2>Dashboard</h2>
+        <div class="row row-cols-md-4 row-cols-2 g-3">
+            <!-- Tổng số lượng tài khoản -->
+            <div class="col">
+                <div class="card card-animate">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1 overflow-hidden">
+                                <p class="text-uppercase fw-medium text-muted text-truncate mb-0"> Khách hàng</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-end justify-content-between mt-4">
+                            <div>
+                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
+                                        data-target="559.25">559.25</span></h4>
+                                <a href="" class="text-decoration-underline">Xem chi tiết</a>
+                            </div>
+                            <div class="avatar-sm flex-shrink-0">
+                                <span class="avatar-title bg-soft-warning rounded fs-3">
+                                    <i class="bx bx-user-circle text-warning"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div><!-- end card body -->
+                </div>
+            </div>
+            <!-- Tổng doanh thu -->
+            <div class="col">
+                <div class="card card-animate">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1 overflow-hidden">
+                                <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Tổng doanh thu</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-end justify-content-between mt-4">
+                            <div>
+                                <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span class="counter-value"
+                                        data-target="559.25">559.25</span>k </h4>
+                                <a href="" class="text-decoration-underline">Xem chi tiết</a>
+                            </div>
+                            <div class="avatar-sm flex-shrink-0">
+                                <span class="avatar-title bg-soft-success rounded fs-3">
+                                    <i class="bx bx-dollar-circle text-success"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div><!-- end card body -->
+                </div>
+            </div>
+            <!-- Tổng số đơn hàng -->
+            <div class="col">
+                <div class="card card-animate">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1 overflow-hidden">
+                                <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Tổng số đơn hàng</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-end justify-content-between mt-4">
+                            <div>
+                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
+                                        data-target="559.25">559.25</span></h4>
+                                <a href="" class="text-decoration-underline">Xem chi tiết</a>
+                            </div>
+                            <div class="avatar-sm flex-shrink-0">
+                                <span class="avatar-title bg-soft-success rounded fs-3">
+                                    <i class="bx bx-shopping-bag text-info"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div><!-- end card body -->
+                </div>
+            </div>
+            <!-- Tổng mã thẻ còn lại -->
+            <div class="col">
+                <div class="card card-animate">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1 overflow-hidden">
+                                <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Tổng mã thẻ còn lại
+                                </p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-end justify-content-between mt-4">
+                            <div>
+                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
+                                        data-target="559.25">559.25</span></h4>
+                                <a href="" class="text-decoration-underline">Xem chi tiết</a>
+                            </div>
+                            <div class="avatar-sm flex-shrink-0">
+                                <span class="avatar-title bg-soft-success rounded fs-3">
+                                    <i class="bx bx-wallet text-primary"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div><!-- end card body -->
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <!-- Biểu đồ doanh thu -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Biểu đồ doanh thu</div>
+                    <div class="card-body">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- Danh sách đơn hàng gần đây -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header align-items-center d-flex">
+                        <h4 class="card-title mb-0 flex-grow-1">Đơn hàng gần đây</h4>
+                       
+                    </div><!-- end card header -->
+
+                    <div class="card-body">
+                        <div class="table-responsive table-card">
+                            <table class="table table-borderless table-centered align-middle table-nowrap mb-0">
+                                <thead class="text-muted table-light">
+                                    <tr>
+                                        <th scope="col">Order ID</th>
+                                        <th scope="col">Khách hàng</th>
+                                        <th scope="col">Thẻ</th>
+                                        <th scope="col">Giá</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <a href="apps-ecommerce-order-details.html"
+                                                class="fw-medium link-primary">#VZ2112</a>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-shrink-0 me-2">
+                                                    <img src="assets/images/users/avatar-1.jpg" alt=""
+                                                        class="avatar-xs rounded-circle">
+                                                </div>
+                                                <div class="flex-grow-1">Alex Smith</div>
+                                            </div>
+                                        </td>
+                                        <td>Clothes</td>
+                                        <td>
+                                            <span class="text-success">$109.00</span>
+                                        </td>
+                                        <td>Zoetic Fashion</td>
+                                    </tr><!-- end tr -->
+                                    <tr>
+                                        <td>
+                                            <a href="apps-ecommerce-order-details.html"
+                                                class="fw-medium link-primary">#VZ2111</a>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-shrink-0 me-2">
+                                                    <img src="assets/images/users/avatar-2.jpg" alt=""
+                                                        class="avatar-xs rounded-circle">
+                                                </div>
+                                                <div class="flex-grow-1">Jansh Brown</div>
+                                            </div>
+                                        </td>
+                                        <td>Kitchen Storage</td>
+                                        <td>
+                                            <span class="text-success">$149.00</span>
+                                        </td>
+                                        <td>Micro Design</td>
+                                    </tr><!-- end tr -->
+                                    <tr>
+                                        <td>
+                                            <a href="apps-ecommerce-order-details.html"
+                                                class="fw-medium link-primary">#VZ2109</a>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-shrink-0 me-2">
+                                                    <img src="assets/images/users/avatar-3.jpg" alt=""
+                                                        class="avatar-xs rounded-circle">
+                                                </div>
+                                                <div class="flex-grow-1">Ayaan Bowen</div>
+                                            </div>
+                                        </td>
+                                        <td>Bike Accessories</td>
+                                        <td>
+                                            <span class="text-success">$215.00</span>
+                                        </td>
+                                        <td>Nesta Technologies</td>
+                                    </tr><!-- end tr -->
+                                    <tr>
+                                        <td>
+                                            <a href="apps-ecommerce-order-details.html"
+                                                class="fw-medium link-primary">#VZ2108</a>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-shrink-0 me-2">
+                                                    <img src="assets/images/users/avatar-4.jpg" alt=""
+                                                        class="avatar-xs rounded-circle">
+                                                </div>
+                                                <div class="flex-grow-1">Prezy Mark</div>
+                                            </div>
+                                        </td>
+                                        <td>Furniture</td>
+                                        <td>
+                                            <span class="text-success">$199.00</span>
+                                        </td>
+                                        <td>Syntyce Solutions</td>
+                                    </tr><!-- end tr -->
+                                    <tr>
+                                        <td>
+                                            <a href="apps-ecommerce-order-details.html"
+                                                class="fw-medium link-primary">#VZ2107</a>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-shrink-0 me-2">
+                                                    <img src="assets/images/users/avatar-6.jpg" alt=""
+                                                        class="avatar-xs rounded-circle">
+                                                </div>
+                                                <div class="flex-grow-1">Vihan Hudda</div>
+                                            </div>
+                                        </td>
+                                        <td>Bags and Wallets</td>
+                                        <td>
+                                            <span class="text-success">$330.00</span>
+                                        </td>
+                                        <td>iTest Factory</td>
+                                    </tr><!-- end tr -->
+                                </tbody><!-- end tbody -->
+                            </table><!-- end table -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            // Biểu đồ doanh thu
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6'],
+                    datasets: [{
+                        label: 'Doanh thu (VNĐ)',
+                        data: [5000000, 10000000, 15000000, 20000000, 25000000, 30000000],
+                        borderColor: 'rgba(13, 110, 253, 1)',
+                        backgroundColor: 'rgba(13, 110, 253, 0.2)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true
+                        }
+                    }
+                }
+            });
+        
+        /**
+         * 
+         * 
+    //Truy vấn dữ liệu (backend):
+    @GetMapping("/chart-data")
+public List<Map<String, Object>> getChartData() {
+    String query = "SELECT month, amount FROM revenue WHERE year = 2024";
+    List<Map<String, Object>> data = jdbcTemplate.queryForList(query);
+    return data;
+}
+
+fetch('/chart-data')
+    .then(response => response.json())
+    .then(data => {
+        const labels = data.map(item => item.month);
+        const values = data.map(item => item.amount);
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Doanh thu (VNĐ)',
+                    data: values,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2
+                }]
+            }
+        });
+    });
+
+        **/
+        </script>
+
+
+    </div>
+    <!-- container-fluid -->
+
+</body>
+
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html layout:decorate="admin/index">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container-fluid" layout:fragment="content">
+
+        <!-- Bảng Danh Sách giảm giá  -->
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1 ctm-text-capitalize-first">Chương Trình giảm giá </h4>
+                <button type="button" class="btn btn-success ctm-text-capitalize-first" data-bs-toggle="modal"
+                    data-bs-target="#createDiscountModal">
+                    Tạo Mã giảm giá
+                </button>
+            </div><!-- end card header -->
+
+            <div class="card-body">
+                <!-- Tìm kiếm -->
+                <form action="">
+                    <div class="row my-4">
+                        <div class="d-flex align-items-center justify-content-center gap-2">
+                            <!-- Trường Tìm Kiếm Văn Bản -->
+                            <input type="text" class="form-control form-control w-25" placeholder="Nhập tên hoặc ID">
+
+                            <!-- Trường Chọn -->
+                            <select class="form-select form-select w-auto">
+                                <option value="">Tất cả</option>
+                                <option value="1">Đang áp dụng</option>
+                                <option value="2">Đã hết hạn</option>
+                                <option value="3">Đã hủy</option>
+                            </select>
+
+                            <!-- Nút Tìm Kiếm -->
+                            <button class="btn btn-secondary">Tìm Kiếm</button>
+                            <button class="btn btn-soft-dark">Đặt lại</button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Bảng Danh Sách Thông tin cá nhân -->
+                <table class="table table-bordered table-nowrap">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Mã giảm giá</th>
+                            <th>Giá Trị</th>
+                            <th>Loại</th>
+                            <th>Ngày Bắt Đầu</th>
+                            <th>Ngày Kết Thúc</th>
+                            <th>trạng thái</th>
+                            <th>Hành Động</th>
+                        </tr>
+                    </thead>
+                    <tr th:each="discount : ${discounts}" th:id="'block-' + ${discount.id}">
+                        <td th:text="${discount.id}">1</td>
+                        <td>
+                            <span th:text="${discount.name}">Giảm 10%</span><br>
+                            <em th:text="${discount.description}" id="td_description" style="font-size: 10px;">Giảm giá 20%</em>
+                        </td>
+                        <td>
+                            <span th:text="${discount.value}">10</span>
+                            <span th:if="${discount.type == 1}" th:text="'%'"></span>
+                            <span th:if="${discount.type != 1}" th:text="'đ'"></span>
+                        </td>
+                        <td>
+                            <span th:if="${discount.type == 1}">Giảm theo phần trăm</span>
+                            <span th:if="${discount.type == 2}">Giảm trực tiếp (VND)</span>
+                        </td>
+                        <td th:text="${discount.formattedStartDay}">2024-11-01 20:00</td>
+                        <td th:text="${discount.formattedEndDay}">2024-11-30 20:00</td>
+
+                        <td>
+                            <!-- 1: đang áp dụng, 2: đã hết hạn, 3: đã hủy -->
+                            <span th:if="${discount.status == 1}" class="badge bg-success">Đang áp dụng</span>
+                            <span th:if="${discount.status == 2}" class="badge bg-danger">Đã hết hạn</span>
+                            <span th:if="${discount.status == 3}" class="badge bg-warning">Đã hủy</span>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-warning btn-updateDiscount"
+                                th:data-id="${discount.id}">Sửa</button>
+                            <button class="btn btn-sm btn-danger btn-deleteDiscount"
+                                th:data-id="${discount.id}">Xóa</button>
+                        </td>
+                    </tr>
+                </table>
+            </div><!-- end card-body -->
+        </div><!-- end card -->
+
+        <!-- container-fluid -->
+
+        <!-- Modal Tạo Mã giảm giá  -->
+        <div class="modal fade" id="createDiscountModal" tabindex="-1" aria-labelledby="createDiscountModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createDiscountModalLabel">Tạo Mã giảm giá</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form Tạo Mã giảm giá -->
+                        <form action="/admin/discount/create" method="POST">
+                            <div class="mb-3">
+                                <label for="discountName" class="form-label">Chương Trình Giảm Giá <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="discountName" name="discountName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="discountDescription" class="form-label">Mô tả</label>
+                                <input type="text" class="form-control" id="discountDescription"
+                                    name="discountDescription" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="discountValue" class="form-label">Giá trị<span
+                                        class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="discountValue" name="discountValue"
+                                    required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="startDate" class="form-label">Ngày Bắt Đầu<span
+                                        class="text-danger">*</span></label>
+                                <input type="datetime-local" class="form-control" id="startDate" name="startDate"
+                                    required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="endDate" class="form-label">Ngày Kết Thúc<span
+                                        class="text-danger">*</span></label>
+                                <input type="datetime-local" class="form-control" id="endDate" name="endDate" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="discountType" class="form-label">Loại<span
+                                        class="text-danger">*</span></label>
+                                <select class="form-select" id="discountType" name="discountType" required>
+                                    <option value="1">Giảm theo phần trăm (%)</option>
+                                    <option value="2">Giảm trực tiếp (VND)</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-secondary">Lưu</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Tạo/Sửa Mã giảm giá  -->
+        <div class="modal fade" id="updateDiscountModal" tabindex="-1" aria-labelledby="updateDiscountModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateDiscountModalLabel">Tạo Mã giảm giá </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form Tạo Mã giảm giá  -->
+                        <form id="updateDiscountForm">
+                            <div class="mb-3">
+                                <label for="discountName" class="form-label">Chương Trình Giảm
+                                    Giá <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="discountName" name="discountName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="discountDescription" class="form-label">Mô tả</label>
+                                <input type="text" class="form-control" id="discountDescription"
+                                    name="discountDescription" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="discountValue" class="form-label">Giá trị<span
+                                        class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="discountValue" name="discountValue"
+                                    required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="startDate" class="form-label">Ngày bắt đầu<span
+                                        class="text-danger">*</span></label>
+                                <input type="datetime-local" class="form-control" id="startDate" name="startDate"
+                                    required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="endDate" class="form-label">Ngày kết thúc<span
+                                        class="text-danger">*</span></label>
+                                <input type="datetime-local" class="form-control" id="endDate" name="endDate" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="discountType" class="form-label">Loại giảm giá <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-select" id="discountType" name="discountType" required>
+                                    <option value="1">Giảm theo phần trăm (%)</option>
+                                    <option value="2">Giảm trực tiếp (VND)</option>
+                                </select>
+                            </div>
+                            <!-- trạng thái -->
+                            <div class="mb-3">
+                                <label for="discountStatus" class="form-label">Trạng Thái<span
+                                        class="text-danger">*</span></label>
+                                <select class="form-select" id="discountStatus" name="discountStatus" required>
+                                    <option value="1">Đang áp dụng</option>
+                                    <option value="2">Đã hết hạn</option>
+                                    <option value="3">Đã hủy</option>
+                                </select>
+                            </div>
+
+                            <input type="hidden" id="discountId" name="discountId">
+
+                            <button type="submit" class="btn btn-secondary">Lưu</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- container-fluid -->
+
+    <script layout:fragment="js">
+        $(document).ready(function () {
+
+            $('form').submit(function (event) {
+                const discountValue = $('#discountValue').val(); // Lấy giá trị của input discountValue
+                const startDate = new Date($('#startDate').val()); // Lấy giá trị của input startDate
+                const endDate = new Date($('#endDate').val()); // Lấy giá trị của input endDate
+
+                // Kiểm tra nếu discountValue nhỏ hơn 0
+                if (discountValue < 0) {
+                    alert('Giá trị giảm giá không thể là số âm.');
+                    event.preventDefault(); // Ngừng hành động mặc định của form
+                    return;
+                }
+
+                // Kiểm tra nếu startDate lớn hơn hoặc bằng endDate
+                if (startDate > endDate) {
+                    alert('Ngày kết thúc phải lớn hơn ngày bắt đầu.');
+                    event.preventDefault(); // Ngừng hành động mặc định của form
+                    return;
+                }
+
+                // Các kiểm tra khác nếu cần
+            });
+
+            // Open the modal and populate with existing data when the "Sửa" button is clicked
+            $(document).on('click', '.btn-updateDiscount', function () {
+                var discountId = $(this).data('id');
+                $.ajax({
+                    url: '/admin/discount/detail/' + discountId,  // Endpoint to get discount details
+                    method: 'GET',
+                    success: function (data) {
+                        // Populate the modal with the data
+                        $('#updateDiscountForm #discountId').val(data.id);
+                        $('#updateDiscountForm #discountName').val(data.name);
+                        $('#updateDiscountForm #discountDescription').val(data.description);
+                        $('#updateDiscountForm #discountValue').val(data.value);
+                        $('#updateDiscountForm #startDate').val(data.startday);
+                        $('#updateDiscountForm #endDate').val(data.endday);
+                        $('#updateDiscountForm #discountType').val(data.type);
+                        $('#updateDiscountForm #discountStatus').val(data.status);
+                        $('#updateDiscountModal').modal('show');
+                    }
+                });
+            });
+
+            // Submit the form via AJAX to update the discount
+            $('#updateDiscountForm').on('submit', function (event) {
+                event.preventDefault();
+
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    url: '/admin/discount/update',  // Endpoint to handle update request
+                    method: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        // If update is successful, update the table row
+                        console.log(response);
+                        var row = $('#block-' + response.id);
+                        row.find('td:nth-child(2) span').text(response.name);  // Update name
+                        row.find('#td_description').text(response.description);  // Update description
+                        row.find('td:nth-child(3)').text(response.value + (response.type == 1 ? '%' : 'đ'));  // Update value
+                        row.find('td:nth-child(4)').text(response.type == 1 ? 'Giảm theo phần trăm' : 'Giảm trực tiếp (VND)');  // Update type
+                        row.find('td:nth-child(5)').text(response.formattedStartDay);  // Update start day
+                        row.find('td:nth-child(6)').text(response.formattedEndDay);  // Update end day
+                        row.find('td:nth-child(7) span').removeClass('badge bg-success bg-danger bg-warning');
+
+                        // Update status
+                        if (response.status == 1) {
+                            row.find('td:nth-child(7)').html('<span class="badge bg-success">Đang áp dụng</span>');
+                        } else if (response.status == 2) {
+                            row.find('td:nth-child(7)').html('<span class="badge bg-danger">Đã hết hạn</span>');
+                        } else if (response.status == 3) {
+                            row.find('td:nth-child(7)').html('<span class="badge bg-warning">Đã hủy</span>');
+                        }
+
+                        $('#updateDiscountModal').modal('hide');
+                    }
+                });
+            });
+
+            // Lắng nghe sự kiện click vào nút Xóa
+            $('.btn-deleteDiscount').click(function () {
+                var discountId = $(this).data('id');
+                // Xác nhận hành động xóa
+                if (confirm('Bạn có chắc muốn xóa giảm giá này?')) {
+                    $.ajax({
+                        url: '/admin/discount/delete/' + discountId,
+                        type: 'post',
+                        success: function (response) {
+                            $('#block-' + discountId).remove();
+                            alert('Giảm giá đã được xóa.');
+                        },
+                        error: function (xhr, status, error) {
+                            // Thông báo lỗi nếu có
+                            alert('Đã có lỗi xảy ra khi xóa giảm giá.');
+                        }
+                    });
+                }
+            });
+
+        });
+
+
+    </script>
+</body>
+
+</html>

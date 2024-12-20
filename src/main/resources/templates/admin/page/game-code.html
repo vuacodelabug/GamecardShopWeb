@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html layout:decorate="admin/index">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mã thẻ Game</title>
+</head>
+
+<body>
+    <div class="container-fluid" layout:fragment="content">
+
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Mã thẻ Game</h4>
+
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addGameCodeModal">
+                        Thêm Mã Thẻ
+                    </button>
+                </div>
+            </div><!-- end card header -->
+
+            <div class="card-body">
+                <!-- Nếu có lỗi, hiển thị thông báo lỗi -->
+                <div th:if="${errorMessage != null}" class="alert alert-danger">
+                    <span th:text="${errorMessage}"></span>
+                </div>
+
+
+                <!-- Bảng Danh Sách Mã thẻ Game -->
+                <table class="table table-bordered table-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Id đơn hàng</th>
+                            <th>Mã Thẻ</th>
+                            <th>Nhà phát hành</th>
+                            <th>Thẻ Game</th>
+                            <th>Ngày dùng</th>
+                            <th>Trạng Thái</th>
+                            <th>Hành Động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="gamecode : ${gamecodes}" th:id="'block'+${gamecode.id}">
+                            <td th:text="${gamecode.id}"></td>
+                            <td th:text="${gamecode.orderId}"></td>
+                            <td th:text="${gamecode.code}"></td>
+                            <td th:text="${gamecode.publisherName}"></td>
+                            <td th:text="${gamecode.gameCardName}"></td>
+                            <td th:text="${gamecode.usedDate}"> </td>
+                            <td>
+                                <span th:class="${gamecode.isUsed ? 'badge bg-danger' : 'badge bg-success'}"
+                                    th:text="${gamecode.isUsed ? 'Đã sử dụng' : 'Chưa sử dụng'}"></span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-info btn-updateGamecode"
+                                    th:data-id="${gamecode.id}">Sửa</button>
+                                <button class="btn btn-sm btn-danger btn-deleteGamecode"
+                                    th:data-id="${gamecode.id}">Xóa</button>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <!-- container-fluid -->
+
+            <!-- Modal Thêm Mã Thẻ Game -->
+            <div class="modal fade" id="addGameCodeModal" tabindex="-1" aria-labelledby="addGameCodeModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addGameCodeModalLabel">Thêm Mã Thẻ Game</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form th:action="@{/admin/game-code/create}" method="post">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="sltPublish" class="form-label">Nhà Phát Hành</label>
+                                        <select id="sltPublish" class="form-select sltPublish" required>
+                                            <option value="">Chọn nhà phát hành</option>
+                                            <option th:each="publisher : ${publishers}" th:value="${publisher.id}"
+                                                th:text="${publisher.name}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="sltGamecard" class="form-label">Thẻ Game</label>
+                                        <select id="sltGamecard" class="form-select sltGamecard" disabled
+                                            name="gameCardId" required>
+                                            <option value="">Chọn thẻ game</option>
+                                            <!-- Các thẻ game sẽ được load sau khi chọn nhà phát hành -->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="codeContainer">
+                                    <label class="form-label">Mã Thẻ Game</label>
+                                    <div class="row mb-3">
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="listcode[]"
+                                                placeholder="Nhập mã thẻ game" required>
+                                        </div>
+                                        <div class="col-md-3 d-flex align-items-end">
+                                            <button type="button" class="btn btn-danger btn-removeCode">-</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-start">
+                                    <button type="button" class="btn btn-success btn-addCode">+</button>
+                                </div>
+                            </div>
+                            <div class="modal-footer text-end">
+                                <button type="button" class="btn btn-soft-dark mt-2"
+                                    data-bs-dismiss="modal">Hủy</button>
+                                <button type="submit" class="btn btn-secondary mt-2">Lưu</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Sửa Mã Thẻ Game -->
+            <div class="modal fade" id="modalUpdateGamecode" tabindex="-1" aria-labelledby="modalUpdateGamecodeLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalUpdateGamecodeLabel">Sửa Mã Thẻ Game</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form id="formUpdateGamecode" action="/admin/game-code/update" method="POST">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="sltPublish" class="form-label">Nhà Phát Hành</label>
+                                        <select id="sltPublish" class="form-select sltPublish" required>
+                                            <option value="">Chọn nhà phát hành</option>
+                                            <option th:each="publisher : ${publishers}" th:value="${publisher.id}"
+                                                th:text="${publisher.name}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="sltGamecard" class="form-label">Thẻ Game</label>
+                                        <select id="sltGamecard" class="form-select sltGamecard" disabled
+                                            name="gameCardId" required>
+                                            <option value="">Chọn thẻ game</option>
+                                            <!-- Các thẻ game sẽ được load sau khi chọn nhà phát hành -->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="form-label">Mã Thẻ Game</label>
+                                    <div class="row mb-3">
+                                        <div class="col">
+                                            <input type="text" class="form-control" name="code" id="editGamecode"
+                                                placeholder="Nhập mã thẻ game" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer text-end">
+                                <button type="button" class="btn btn-soft-dark mt-2"
+                                    data-bs-dismiss="modal">Hủy</button>
+                                <button type="submit" class="btn btn-secondary mt-2">Lưu</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- End Page-content -->
+    </div><!-- container-fluid -->
+
+    <script layout:fragment="js">
+        $(document).ready(function () {
+            // Khi chọn nhà phát hành
+            $(document).on("change", ".sltPublish", function () {
+                const publisherId = $(this).val();  // Lấy giá trị publisherId từ select box
+                if (publisherId) {
+                    $.ajax({
+                        url: '/admin/game-code/get-publisher/' + publisherId,
+                        method: 'GET',
+                        success: function (data) {
+                            // Clear thẻ game cũ
+                            $(".sltGamecard").empty();
+                            if (!data || data.length === 0) {
+                                $(".sltGamecard").prop('disabled', true);
+                                $(".sltGamecard").append('<option value="">Không có thẻ game</option>');
+                            } else {
+                                $(".sltGamecard").prop('disabled', false);
+                                $(".sltGamecard").append('<option value="">Chọn thẻ game</option>');
+                                data.forEach(function (gamecard) {
+                                    $(".sltGamecard").append('<option value="' + gamecard.id + '">' + gamecard.name + '</option>');
+                                });
+                            }
+                        },
+                        error: function (err) {
+                            console.log('Error fetching game cards', err);
+                        }
+                    });
+                } else {
+                    // Nếu không chọn nhà phát hành, clear danh sách thẻ game
+                    $(".sltGamecard").empty().prop('disabled', true);
+                    $(".sltGamecard").append('<option value="">Chọn thẻ game</option>');
+                }
+            });
+
+            // Thêm dòng nhập mã thẻ mới
+            $(document).on("click", ".btn-addCode", function () {
+                const newRow = `
+                            <div class="row mb-3">
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control gamecodeInput" name="listcode[]" placeholder="Nhập mã thẻ game" required>
+                                </div>
+                                <div class="col-md-3 d-flex align-items-end">
+                                    <button type="button" class="btn btn-danger btn-removeCode">-</button>
+                                </div>
+                            </div>`;
+                $("#codeContainer").append(newRow);
+            });
+
+            // Xóa dòng nhập mã thẻ
+            $(document).on("click", ".btn-removeCode", function () {
+                $(this).closest(".row").remove();
+            });
+
+            // Xử lý gửi form thêm mã thẻ
+            $("#addGameCodeForm").on("submit", function (e) {
+                e.preventDefault();
+
+                const publisherId = $(".sltPublish").val();
+                const cardId = $(".sltGamecard").val();
+                const codes = $(".gamecodeInput")
+                    .map(function () {
+                        return $(this).val();
+                    })
+                    .get();
+
+                // Kiểm tra lỗi
+                if (!publisherId || !cardId || codes.some((code) => !code.trim())) {
+                    alert1s("Vui lòng điền đầy đủ thông tin.");
+                    return;
+                }
+
+                // Gửi dữ liệu qua AJAX
+                $.ajax({
+                    url: "/api/addGameCodes", // Endpoint API
+                    method: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({ publisherId, cardId, codes }),
+                    success: function (response) {
+                        alert1s("Thêm mã thẻ thành công!");
+                        $("#addGameCodeForm")[0].reset();
+                        $("#codeContainer").html("");
+                    },
+                    error: function () {
+                        alert1s("Lỗi khi thêm mã thẻ. Vui lòng thử lại.");
+                    }
+                });
+            });
+
+
+            // Sửa mã thẻ
+            $(".btn-updateGamecode").click(function () {
+                const id = $(this).data("id");
+                $.ajax({
+                    url: "/admin/game-code/detail/" + id,
+                    method: "GET",
+                    success: function (data) {
+                        console.log(data);
+                        $("#modalUpdateGamecode").modal("show");
+                        $("#formUpdateGamecode #editGamecode").val(data.code);
+                        $("#formUpdateGamecode").append('<input type="hidden" name="id" value="' + id + '">');
+
+                        // Cập nhật publisherId và gameCardId
+                        $("#formUpdateGamecode .sltPublish").val(data.publisherId);  // Cập nhật publisherId
+                        $("#formUpdateGamecode .sltPublish").trigger("change");
+                        setTimeout(function () {
+                            $("#formUpdateGamecode .sltGamecard").val(data.gameCardId);  // Cập nhật gameCardId
+                            console.log('select:', $(".sltGamecard").val());
+                        }, 100);
+                    },
+                    error: function () {
+                        alert1s("Lỗi khi lấy thông tin mã thẻ. Vui lòng thử lại.");
+                    }
+                });
+            });
+
+            // xóa mã thẻ
+            $(".btn-deleteGamecode").click(function () {
+                const id = $(this).data("id");
+                $.ajax({
+                    url: "/admin/game-code/delete/" + id,
+                    method: "post",
+                    success: function (data) {
+                        alert1s("Xóa mã thẻ thành công!");
+                        $("#block" + id).remove();
+                    },
+                    error: function () {
+                        alert1s("Lỗi khi xóa mã thẻ. Vui lòng thử lại.");
+                    }
+                });
+            });
+
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+</head>
+
+<body>
+
+    <div class="container-fluid" th:fragment="sidebar">
+        <div id="two-column-menu">
+        </div>
+        <ul class="navbar-nav" id="navbar-nav">
+            <!-- Khởi tạo -->
+            <ul class="navbar-nav">
+                <li class="menu-title "><span class="">Danh mục Quản lý</span></li>
+                <!-- Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="/admin/dashboard" role="button">
+                        <i class="ri-dashboard-line"></i> <span class="ctm-text-capitalize-first">Dashboard</span>
+                    </a>
+                </li>
+                <!-- Thêm mục Home -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="/home" role="button">
+                        <i class="ri-home-line"></i> <span class="ctm-text-capitalize-first">Trang Chủ</span>
+                    </a>
+                </li>
+                <!-- Quản lý người dùng -->
+                <li class="nav-item ">
+
+                    <a class="nav-link menu-link" href="#sidebarUser" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarUser">
+                        <i class="ri-user-line"></i> <span class="ctm-text-capitalize-first">Quản lý Người
+                            Dùng</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarUser">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="/admin/user" class="nav-link"><span class="ctm-text-capitalize-first">Danh sách
+                                        Người
+                                        Dùng</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/profile" class="nav-link"><span class="ctm-text-capitalize-first">Thông
+                                        tin Cá Nhân</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- Quản lý Thẻ Game -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarGameCard" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarGameCard">
+                        <i class="ri-gamepad-line"></i> <span class="ctm-text-capitalize-first">Quản lý Thẻ
+                            Game</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarGameCard">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="/admin/publisher" class="nav-link"><span class="ctm-text-capitalize-first">Nhà
+                                        Phát Hành</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/game-card" class="nav-link"><span class="ctm-text-capitalize-first">Thẻ
+                                        Game</span></a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="/admin/game-code" class="nav-link"><span class="ctm-text-capitalize-first">Mã
+                                        Thẻ
+                                        Game</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/discount" class="nav-link"><span
+                                        class="ctm-text-capitalize-first">Chương
+                                        Trình Giảm Giá</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- Quản lý Giỏ Hàng và Đơn Hàng -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarOrder" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarOrder">
+                        <i class="ri-shopping-cart-line"></i> <span class="ctm-text-capitalize-first">Quản lý
+                            Đơn Hàng</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarOrder">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="/admin/order" class="nav-link"><span class="ctm-text-capitalize-first">Danh
+                                        sách
+                                        Đơn Hàng</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/order/success" class="nav-link"><span
+                                        class="ctm-text-capitalize-first">Giao
+                                        Dịch thành công</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <!-- Báo cáo Thống kê -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarReports" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarReports">
+                        <i class="ri-bar-chart-box-line"></i> <span class="ctm-text-capitalize-first">Báo cáo Thống
+                            kê</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarReports">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="/admin/report/sale" class="nav-link"><span
+                                        class="ctm-text-capitalize-first">Báo
+                                        cáo Người dùng</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/report/sale" class="nav-link"><span
+                                        class="ctm-text-capitalize-first">Báo
+                                        cáo Doanh thu</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/report/inventory" class="nav-link"><span
+                                        class="ctm-text-capitalize-first">Báo cáo Kho hàng</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+            </ul>
+    </div>
+
+</body>

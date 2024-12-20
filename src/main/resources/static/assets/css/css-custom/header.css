@@ -1,0 +1,189 @@
+:root{
+  --text-color-1: rgba(255, 255, 255, .75) !important;
+  --background-color-1: #0D0A25;
+  --background-color-2: #323047;
+  --background-color-3: #777586;
+  --background-color-4: #aca9bb;
+}
+
+body{
+  background: #fff !important;
+}
+
+body .container  {
+  width: 1440px !important;
+}
+
+/* Main Header */
+.main-header {
+  background-color: var(--background-color-1);
+  padding: 10px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Header Container */
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* Logo */
+.logo img {
+  height: 50px;
+}
+
+/* Navigation Menu */
+.main-nav{
+  display: flex;
+  align-items: center;
+}
+
+.main-nav ul {
+  display: flex;
+  gap: 25px;
+  list-style: none;
+}
+
+.main-nav ul li a {
+  color: var(--text-color-1);
+  text-decoration: none;
+  font-size: 16px;
+  transition: .16s;
+}
+
+.main-nav ul li a:hover,
+.main-nav ul li a.active {
+  color: #ff6600;
+}
+
+/* Search Bar */
+.search-bar {
+  width: 30%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-bar input {
+  padding: 5px 15px;
+  font-size: 14px;
+  background-color: var(--background-color-2);
+  border: 1px solid var(--background-color-2);
+  color: var(--text-color-1);
+  border-radius: 15px;
+  width: 250px;
+}
+
+
+/* User Profile */
+.user-profile {
+  display: flex;
+  max-width: 350px;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-profile .user-profile-container {
+  color: var(--text-color-1);
+}
+
+.user-profile .user-profile-icons i {
+  position: relative;
+}
+
+.user-profile .user-profile-icons span {
+  position: absolute;
+  font-size: 12px;
+  top: 0%;
+  left: 65%;
+  height: 15px;
+  width: fit-content;
+  padding: 0 5.25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background-color: #1E90FF   ;
+}
+
+
+
+/* Login & Review*/
+.login{
+  display: flex;
+  gap: 10px;
+}
+
+.login-btn {
+  display: flex;
+  align-items: center;
+  border: 3px solid var(--background-color-2);
+  background-color: #ff6600;
+  color: #fff;
+  padding: 5px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: .16s;
+}
+
+.login-btn.review-btn{
+  background-color: transparent;
+  color: var(--text-color-1);
+}
+
+.login-btn:hover {
+  background-color: #e65c00;
+  color: #fff;
+}
+
+
+
+header.main-header *{
+  font-size: 14px;
+}
+
+
+/* Header Gaps */
+.header-gaps{
+  height: 50px;
+  margin: 0 20px;
+  border-left: var(--background-color-2) 2px solid;
+  
+}
+
+
+/* Offcanvas */
+.offcanvas-header-custom{
+  background-image: linear-gradient(135deg, var(--background-color-1), var(--background-color-2));
+  border-end-end-radius: 65px;
+}
+
+.offcanvas-menu{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.offcanvas-menu-title{
+  background: var(--background-color-3);
+  margin: 0 -1.3rem;
+  margin-top: 1rem;
+  padding: .5rem   1.3rem;
+  font-size: 18px;
+}
+
+.offcanvas-menu-items{
+  display: flex;
+  align-items: center;
+  font-size: 19px;
+  gap: 1rem;
+}
+
+.offcanvas-menu-items i{
+  font-size: 30px;
+}

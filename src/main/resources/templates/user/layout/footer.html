@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+  <body>
+ <!-- Footer -->
+ <footer th:fragment="footer" class="bg-dark text-light py-4">
+    <div class="container">
+        <div class="row">
+            <!-- Cột thông tin -->
+            <div class="col-md-4 mb-3">
+                <h5 class="text-light">Về Chúng Tôi</h5>
+                <p>Nạp thẻ game trực tuyến, nhanh chóng và an toàn. Chúng tôi cung cấp các dịch vụ thẻ game uy tín hàng đầu tại Việt Nam.</p>
+            </div>
+
+<!-- Cột liên kết nhanh -->
+<div class="col-md-4 mb-3">
+    <nav aria-label="Liên Kết Nhanh">
+        <ul class="list-unstyled">
+            <li><a href="/" class="text-light text-decoration-none">Trang Chủ</a></li>
+            <li><a href="/gioi-thieu" class="text-light text-decoration-none">Giới Thiệu</a></li>
+            <li><a href="/san-pham" class="text-light text-decoration-none">Sản Phẩm</a></li>
+            <li><a href="/lien-he" class="text-light text-decoration-none">Liên Hệ</a></li>
+        </ul>
+        </nav>
+</div>
+
+            <!-- Cột thông tin liên hệ -->
+            <div class="col-md-4 mb-3">
+                <h5 class="text-light">Liên Hệ</h5>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Đường ABC, TP.HCM</li>
+                    <li><i class="fas fa-phone"></i> +84 123 456 789</li>
+                    <li><i class="fas fa-envelope"></i> email@example.com</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Đường phân cách -->
+        <hr class="my-4">
+
+        <!-- seo Thêm thẻ alt cho các biểu tượng mạng xã hội -->
+        <div class="d-flex justify-content-between align-items-center">
+            <p class="mb-0">© 2024 napthegame. All rights reserved.</p>
+            <div>
+                <a href="#" class="text-light text-decoration-none me-3" aria-label="Facebook">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="#" class="text-light text-decoration-none me-3" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="text-light text-decoration-none" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+            
+        </div>
+    </div>
+</footer>
+  </body>
+  
+</html>

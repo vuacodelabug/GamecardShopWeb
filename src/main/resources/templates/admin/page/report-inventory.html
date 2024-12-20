@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html layout:decorate="admin/index">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container-fluid" layout:fragment="content">
+        <div class="container mt-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Báo cáo kho hàng - Tháng <span th:text="${reportDate}"></span></h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-nowrap">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên Thẻ Game</th>
+                                <th>Nhà Phát Hành</th>
+                                <th>Giá Trị</th>
+                                <th>Số Lượng Còn Lại</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Lặp qua các mặt hàng trong kho -->
+                            <tr th:each="item, iterStat : ${inventorys}">
+                                <td th:text="${iterStat.index + 1}"></td> <!-- STT -->
+                                <td th:text="${item.gameCardName}"></td> <!-- Tên Thẻ Game -->
+                                <td th:text="${item.publisher}"></td> <!-- Nhà Phát Hành -->
+                                <td th:text="${item.value}"></td> <!-- Giá Trị -->
+                                <td th:text="${item.quantity}"></td> <!-- Số Lượng Còn Lại -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- container-fluid -->
+
+    <script layout:fragment="js">
+
+    </script>
+</body>
+
+</html>

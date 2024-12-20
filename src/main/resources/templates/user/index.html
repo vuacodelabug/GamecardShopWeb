@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <!-- seo -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GameCard - Trang web mua thẻ game online tiện lợi, giá rẻ, hỗ trợ nạp thẻ nhanh chóng với nhiều ưu đãi hấp dẫn.">
+    <meta name="keywords" content="thẻ game, mua thẻ game online, nạp thẻ game, thẻ Garena, thẻ Zing, thẻ Viettel, khuyến mãi thẻ game">
+    <meta name="author" content="GameCard Team">
+    <meta property="og:title" content="GameCard - Nền tảng mua thẻ game trực tuyến" />
+    <meta property="og:description" content="Mua thẻ game nhanh chóng và tiện lợi trên GameCard. Tìm hiểu thêm về chúng tôi qua trang điều khoản và hướng dẫn sử dụng." />
+    <meta property="og:image" content="path-to-your-image/logo-og.png" />
+    <meta property="og:url" content="https://yourwebsite.com" />
+    
+    <title layout:title-pattern="$CONTENT_TITLE | $LAYOUT_TITLE">GameCard</title>
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <!-- bootstrap-icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Icons Css -->
+    <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap Css -->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- boostrap 5 css-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- boostrap 5 js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="/assets/css/css-custom/style.css">
+    <link rel="stylesheet" href="/assets/css/css-custom/header.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        .bg-gray-custom {
+            background-color: #efefef;
+            /* Màu xám nhạt */
+        }
+
+        /* Khi radio button được chọn */
+        input.btn-check:checked+label.btn-outline-primary {
+            border: 3px solid #007bff;
+            background-color: #ffff;
+            box-sizing: border-box;
+            /* Đảm bảo padding không bị ảnh hưởng */
+        }
+
+        @media (max-width: 768px) {
+            #publisher-list {
+                justify-content: space-around;
+            }
+
+            #menhgiabox label {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- header -->
+    <div th:replace="~{user/layout/header :: header_heyo}"></div>
+
+    <!-- content -->
+    <div class="container py-2" layout:fragment="content">
+
+    </div>
+
+    <!-- Modal -->
+    <!-- Đăng nhập -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="loginModalLabel">Đăng nhập</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="loginForm" action="/process-login" method="post">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Email đăng nhập</label>
+                            <input type="text" class="form-control" id="username" name="email" required>
+                            <div class="invalid-feedback">Email đăng nhập phải có ít nhất 6 ký tự.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Mật khẩu</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                            <div class="invalid-feedback">Mật khẩu phải có ít nhất 6 ký tự.</div>
+                        </div>
+                        <div class="text-danger">
+                            <!-- Display error message -->
+                            <p th:if="${session.error}" th:text="${session.error}"></p>
+                        </div>
+                        <div class="text-center mt-3">
+                            <p>Chưa có tài khoản?<a href="" data-bs-target="#registerModal" data-bs-toggle="modal">Đăng
+                                    ký</a></p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary" id="loginSubmit">Đăng nhập</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Đăng ký -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="registerModalLabel">Đăng ký</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="registerForm" action="/register" method="post">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Họ và tên<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="name" name="profile_name"
+                                placeholder="Nhập họ và tên">
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Số Điện Thoại</label>
+                            <input type="text" class="form-control" id="phone" name="profile_phone"
+                                placeholder="Nhập số điện thoại">
+                            <div class="invalid-feedback">Định dạng không hợp lệ</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerEmail" class="form-label">Email<span
+                                    class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="registerEmail" name="user_email" required>
+                            <div class="invalid-feedback">Email phải có định dạng @gmail.com.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">Mật khẩu<span
+                                    class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="registerPassword" name="user_password"
+                                required>
+                            <div class="invalid-feedback">Mật khẩu phải có ít nhất 6 ký tự.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Xác nhận mật khẩu<span
+                                    class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="confirmPassword" name="user_confirmpassword"
+                                required>
+                            <div class="invalid-feedback">Xác nhận mật khẩu phải khớp với mật khẩu.</div>
+                        </div>
+                        <hr>
+                        <div class="text-center mt-3">
+                            <p>Đã có tài khoản? <a href="" data-bs-target="#loginModal" data-bs-toggle="modal">Đăng
+                                    nhập</a></p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary" id="registerSubmit">Đăng ký</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Thông báo -->
+    <div class="modal fade" id="modalNotify" tabindex="-1" aria-labelledby="emailConfirmationModalLabel"
+        aria-hidden="true" th:if="${isSuccess != null and messager != null and messager != ''}">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="mb-3">
+                        <!-- Thay đổi class dựa trên trạng thái -->
+                        <span class="fs-1">
+                            <i th:if="${isSuccess}" class="text-success bi bi-check-circle-fill"></i>
+                            <i th:if="${!isSuccess}" class="text-danger bi bi-exclamation-circle-fill"></i>
+                        </span>
+                    </div>
+                    <p class="mb-3" th:text="${messager != null ? messager : ''}">
+                        <!-- Nội dung thông báo sẽ được thay thế ở đây -->
+                    </p>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="messager-hiden" style="display:none;" th:text="${messager}"></div>
+
+
+
+    <!-- Footer -->
+    <div th:replace="~{user/layout/footer :: footer}"></div>
+
+    <!-- JAVASCRIPT -->
+    <script src="/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="/assets/libs/node-waves/waves.min.js"></script>
+    <script src="/assets/libs/feather-icons/feather.min.js"></script>
+    <script src="/assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <script src="/assets/js/plugins.js"></script>
+
+    <!-- App js -->
+    <script src="/assets/js/app.js"></script>
+    <!-- jquery js -->
+    <script src="/assets/js/script-custom.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Kiểm tra xem URL có chứa "login=false" hoặc error=true không
+            var loginStatus = window.location.href.includes("login=false") || window.location.href.includes("error=true");
+            if (loginStatus) {
+                $('#loginModal').modal('show');
+            }
+
+            // Validate login form
+            $("#loginSubmit").click(function (event) {
+                event.preventDefault();
+
+                var isValid = true;
+
+                // Validate username
+                var username = $("#username").val().trim();
+                if (username.length < 6) {
+                    $("#username").addClass("is-invalid");
+                    isValid = false;
+                } else {
+                    $("#username").removeClass("is-invalid");
+                }
+
+                // Validate password
+                var password = $("#password").val().trim();
+                if (password.length < 6) {
+                    $("#password").addClass("is-invalid");
+                    isValid = false;
+                } else {
+                    $("#password").removeClass("is-invalid");
+                }
+
+                // Submit form if valid
+                if (isValid) {
+                    $("#loginForm").submit();
+                }
+            });
+
+            // Validate Register Form
+            $("#registerSubmit").click(function (event) {
+                event.preventDefault();
+                var isValid = true;
+
+                var registerEmail = $("#registerEmail").val().trim();
+                var registerPassword = $("#registerPassword").val().trim();
+                var confirmPassword = $("#confirmPassword").val().trim();
+
+                var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                if (!emailPattern.test(registerEmail)) {
+                    $("#registerEmail").addClass("is-invalid");
+                    isValid = false;
+                } else {
+                    $("#registerEmail").removeClass("is-invalid");
+                }
+
+                if (registerPassword === "") {
+                    $("#registerPassword").addClass("is-invalid");
+                    isValid = false;
+                } else {
+                    $("#registerPassword").removeClass("is-invalid");
+                }
+
+                if (confirmPassword === "" || confirmPassword !== registerPassword) {
+                    $("#confirmPassword").addClass("is-invalid");
+                    isValid = false;
+                } else {
+                    $("#confirmPassword").removeClass("is-invalid");
+                }
+
+                if (isValid) {
+                    $("#registerForm").submit();
+                }
+            });
+
+            // Kiểm tra giá trị khi người dùng nhập trực tiếp
+            $(".quantity-input").on("input", function () {
+                var value = parseInt($(this).val());
+                if (isNaN(value) || value < 1) {
+                    $(this).val(1);
+                }
+            });
+            // Kiểm tra khi người dùng nhập hoặc rời khỏi trường nhập
+            $("#emailInput").on("blur", function () {
+                var emailInput = $(this).val().trim();
+                var emailError = $("#emailError");
+
+                // Kiểm tra xem trường email có trống hoặc sai định dạng không
+                if (emailInput === "") {
+                    emailError.text("Email không được để trống.").show();
+                } else if (!validateEmail(emailInput)) {
+                    emailError.text("Định dạng email không chính xác. Ví dụ: example@domain.com.").show();
+                } else {
+                    emailError.hide();
+                }
+            });
+
+            // Hàm kiểm tra định dạng email
+            function validateEmail(email) {
+                var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                return emailPattern.test(email);
+            }
+
+
+        });
+    </script>
+
+    <!-- Thymeleaf -->
+    <script layout:fragment="js"></script>
+
+
+
+</body>
+
+</html>

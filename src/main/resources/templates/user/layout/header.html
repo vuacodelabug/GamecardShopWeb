@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+</head>
+
+<body>
+
+	<header class="main-header" th:fragment="header_heyo">
+		<div class="header-container">
+			<!-- Logo -->
+			<div class="logo">
+				<a href="/home">
+					<!-- seo -->
+					<img src="https://images-platform.99static.com//yMu615t0H7ZoE7NAZn48S48DZGY=/350x309:851x810/fit-in/590x590/99designs-contests-attachments/90/90852/attachment_90852898"
+						alt="GameCard - Nền tảng mua thẻ game trực tuyến uy tín" />
+
+					<!-- <img src="logo.png" alt="Website Logo" /> -->
+					<h1 class="mb-0 text-white-75 fw-bold" style="font-size: 30px;">GameCard</h1>
+				</a>
+			</div>
+
+			<div class="header-gaps pc-content"></div>
+
+			<!-- Navigation Menu -->
+			<nav class="main-nav pc-content">
+				<ul class="m-0 p-0">
+					<li><a href="/home" title="Trang chủ GameCard">Trang chủ</a></li>
+					<li><a href="/about" title="Về GameCard - Giới thiệu nền tảng">Giới thiệu</a></li>
+					<li><a href="/policy" title="Điều khoản sử dụng thẻ game tại GameCard">Điều khoản</a></li>
+					<li><a href="/guide" class="active" title="Hướng dẫn mua thẻ game trên GameCard">Hướng dẫn</a></li>
+				</ul>
+			</nav>
+
+			<div class="header-gaps pc-content"></div>
+
+			<!-- Search Bar -->
+			<!-- seo Tối ưu placeholder  -->
+			<div class="search-bar pc-content">
+				<input class="w-100" type="text" placeholder="Tìm kiếm thẻ game, tin tức hoặc sự kiện trên GameCard..." />
+			</div>
+
+			<div class="header-gaps pc-content"></div>
+
+
+			<!-- Giao diện trước khi đăng nhập -->
+			<div sec:authorize="isAnonymous()" class="notlogged-content login pc-content flex-content">
+				<a href="login.html" class="login-btn rounded-pill review-btn" data-bs-toggle="modal"
+					data-bs-target="#registerModal">
+					<i class="fas fa-user me-2"></i> Đăng ký
+				</a>
+				<button href="login.html" class="login-btn rounded-pill" data-bs-toggle="modal"
+					data-bs-target="#loginModal"><i class="fas fa-user me-2"> </i> Đăng nhập</button>
+			</div>
+			<!-- /Giao diện trước khi đăng nhập -->
+
+
+			<!-- Giao diện sau khi đăng nhập -->
+			<!-- User Profile -->
+			<div sec:authorize="isAuthenticated()" class="loggedin-content user-profile pc-content flex-content">
+				<img class="rounded-circle avatar-sm border border-white border-2" alt="200x200"
+					src="assets/images/users/user-dummy-img.jpg">
+
+				<div class="user-profile-container" id="page-header-user-dropdown" data-bs-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false">
+					<span class="me-3" th:text="${session.user_name}">Hoàng Long</span>
+					<hr class="my-1 border-top border-2" style="margin-left: -5px;">
+
+
+					<span class="user-profile-icons me-4">
+						<i class="las la-bell fs-18 pt-1   ">
+							<span class="rounded-pill">3</span>
+						</i>
+					</span>
+				</div>
+				<div class="dropdown-menu dropdown-menu-end">
+					<!-- item-->
+					<a class="dropdown-item" href="/profile-auth"><i
+							class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
+							class="align-middle">Profile</span></a>
+					<div class="dropdown-divider"></div>
+					<!-- Quyền admin -->
+					<div sec:authorize="hasAuthority('admin')">
+						<a class="dropdown-item" href="/admin/dashboard"><i
+								class="mdi mdi-gauge text-muted fs-16 align-middle me-1"></i> <span
+								class="align-middle">Quản trị</span></a>
+					</div>
+					<a class="dropdown-item" href="/profile-auth?setting=true"><i
+							class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i> <span
+							class="align-middle">Settings</span></a>
+					<a class="dropdown-item" href="/logout"><i
+							class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span
+							class="align-middle">Logout</span></a>
+
+				</div>
+			</div>
+			<!-- /Giao diện sau khi đăng nhập -->
+
+			<!-- Mobile -->
+			<div class="d-flex gap-3 text-white-75 mobile-content d-lg-none">
+				<i class="ri-search-line fs-24" data-bs-toggle="offcanvas" data-bs-target="#searchOffcanvas"></i>
+				<i class="ri-menu-3-fill fs-24" data-bs-toggle="offcanvas" data-bs-target="#menuOffcanvas"></i>
+			</div>
+
+			<!-- Search Offcanvas -->
+			<div class="offcanvas offcanvas-top" tabindex="-1" id="searchOffcanvas" style="height: 77px;">
+				<div class="offcanvas-header">
+					<input type="text" class="form-control me-3" placeholder="Tìm kiếm...">
+					<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+						aria-label="Close"></button>
+				</div>
+			</div>
+
+			<!-- Menu Offcanvas -->
+			<div class="offcanvas offcanvas-end w-75 border-0" tabindex="-1" id="menuOffcanvas">
+				<!-- Giao diện trước khi đăng nhập -->
+				<div class="notlogged-content offcanvas-header pb-0">
+					<button type="button" class="btn btn-outline-danger fs-18 form-control" data-bs-toggle="modal"
+						data-bs-target="#registerModal">Đăng nhập</button>
+				</div>
+				<!-- /Giao diện trước khi đăng nhập -->
+
+
+				<!-- Giao diện sau khi đăng nhập -->
+				<div class="loggedin-content offcanvas-header offcanvas-header-custom">
+					<div class="d-flex justify-content-between align-items-center gap-3">
+						<img class="rounded-circle avatar-md border border-light border-4" alt="200x200"
+							src="assets/images/users/user-dummy-img.jpg">
+
+						<div class=" d-flex flex-column">
+							<h5 class="text-white-75 mb-1">Xin chào</h5>
+							<h3 class="text-white-75 fw-semibold mb-0">Mỹ Linh</h3>
+						</div>
+					</div>
+				</div>
+				<!-- /Giao diện sau khi đăng nhập -->
+
+
+				<div id="mobile-menu-offcanvas" class="offcanvas-body">
+					<!-- Giao diện sau khi đăng nhập -->
+					<div class="offcanvas-menu loggedin-content">
+						<div class="offcanvas-menu-items">
+							<i class="las la-user-edit"></i>
+							<span>Thông tin người dùng</span>
+						</div>
+					</div>
+					<!-- /Giao diện sau khi đăng nhập -->
+
+					<div class="offcanvas-menu">
+						<!-- Offcanvas Menu Title -->
+						<div class="offcanvas-menu-title text-white-75">
+							Thanh điều hướng
+						</div>
+
+						<a href="">
+							<div class="offcanvas-menu-items">
+								<i class="la la-home"></i>
+								<span>Trang chủ</span>
+							</div>
+						</a>
+
+						<div class="offcanvas-menu-items">
+							<i class="la la-info-circle"></i>
+							<span>Giới thiệu</span>
+						</div>
+
+						<div class="offcanvas-menu-items">
+							<i class="la la-book"></i>
+							<span>Điều khoản</span>
+						</div>
+
+						<div class="offcanvas-menu-items">
+							<i class="la la-question-circle"></i>
+							<span>Hướng dẫn</span>
+						</div>
+					</div>
+
+					<hr>
+
+					<!-- Giao diện sau khi đăng nhập -->
+					<!-- Đăng xuất -->
+					<button type="button"
+						class="mobile-content loggedin-content btn btn-outline-danger fs-18 form-control">Đăng
+						xuất</button>
+					<!-- /Giao diện sau khi đăng nhập -->
+				</div>
+			</div>
+			<!-- /Mobile -->
+		</div>
+		<script>
+			var screenWidth = $(window).width();
+
+			// Responsive
+			function updateUI() {
+				// Kiểm tra kích thước màn hình và thay đổi giao diện tương ứng
+				if (screenWidth < 992) {
+
+					// Ẩn giao diện PC và hiển thị giao diện mobile khi màn hình nhỏ (điện thoại)
+					$('.pc-content').addClass('d-none');
+				}
+			}
+
+			// Gọi hàm cập nhật giao diện khi trang tải xong
+			updateUI();
+
+			// Lắng nghe sự kiện thay đổi kích thước cửa sổ trình duyệt
+			$(window).resize(function () {
+				screenWidth = $(window).width();  // Cập nhật lại kích thước màn hình
+				updateUI();
+			});
+
+		</script>
+	</header>
+</body>
+
+</html>

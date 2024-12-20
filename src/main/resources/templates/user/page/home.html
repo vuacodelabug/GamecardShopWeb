@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html layout:decorate="user/index">
+
+<head>
+    <!--seo Title -->
+    <title>Mua Thẻ Game Online - Tiện Lợi và An Toàn</title>
+</head>
+
+<body>
+    <!-- Card Providers -->
+    <div layout:fragment="content">
+        <!-- repónive -->
+        <div class="responsive">
+            <!-- banner-1 -->
+            <div id="banner-1" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#banner-1" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#banner-1" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#banner-1" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <!-- SEO thẻ alt cho hình ảnh -->
+                    <div class="carousel-item" style="object-fit: cover; height: 400px;">
+                        <img src="https://www.payoo.vn/img/content/2020/11/201806_bannergame_opt2.png" class="d-block w-100"
+                            alt="Banner mua thẻ game giá rẻ" />
+                    </div>
+                    <div class="carousel-item active" style="object-fit: cover; height: 400px;">
+                        <img src="https://file.hstatic.net/200000855699/collection/pk_web_banner_d2917fe8964a49d8bd1c32a8e6e49e62.png" class="d-block w-100"
+                            alt="Banner mua thẻ game giá rẻ" />
+                    </div>
+                    <div class="carousel-item" style="object-fit: cover; height: 400px;">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQydI4Lf9tHOpVFXgq1D3ag67c8q1DJrnzCBw&s" class="d-block w-100"
+                            alt="Banner mua thẻ game giá rẻ" />
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#banner-1" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#banner-1" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-md-12">
+                    <!-- Loại thẻ -->
+                    <div class="">
+                        <h6 class="bg-gray-custom p-3 my-4 fw-bold">Chọn loại thẻ</h6>
+                        <div class="row row-cols-6 g-2" id="publisher-list">
+                            <!-- Zing Radio 1 -->
+                            <div class="col">
+                                <input type="radio" class="btn-check" name="loaithe" data-name="Zing" id="zing1"
+                                    autocomplete="off">
+                                <div style="heigth: 125px">
+                                    <label
+                                        class="btn btn-outline-primary p-1 d-flex align-items-center justify-content-center"
+                                        for="zing1">
+                                        <img src="https://napthengay.vn/media/images/ZING_01.png" alt="Zing"
+                                            width="123">
+                                </div>
+                                </label>
+                            </div>
+                            <!-- Coin Radio 1 -->
+                            <div class="col">
+                                <input type="radio" class="btn-check" name="loaithe" data-name="V_COIN" id="coin1"
+                                    autocomplete="off">
+                                <label
+                                    class="btn btn-outline-primary p-1 d-flex align-items-center justify-content-center"
+                                    for="coin1">
+                                    <img src="https://napthengay.vn/media/images/V_COIN_01.png" alt="COIN" width="123">
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Mệnh giá -->
+                    <div class="">
+                        <h6 class="bg-gray-custom p-3 my-4 fw-bold">Chọn mệnh giá và số lượng</h6>
+
+                        <div class="d-flex flex-wrap gap-2" id="menhgiabox">
+                            <!-- Radio Button 1 -->
+                            <div class="col">
+
+                            </div>
+                            <input type="radio" class="btn-check" name="menhgia" id="button1" autocomplete="off">
+                            <label class="btn btn-outline-primary text-dark p-2" for="button1"
+                                style="width: 132.6px; height: 72.5px;">
+                                <div class="text-center fw-bold fs-5">50.000đ</div>
+                                <div class="d-flex justify-content-between border-top border-2 pt-1">
+                                    <span class="small text-capitalize" style="font-size: 10px;">giá bán:</span>
+                                    <span class="text-danger text-white:active fw-bold"
+                                        style="font-size: 14px;">49.000đ</span>
+                                </div>
+                            </label>
+
+                            <!-- Radio Button 2 -->
+                            <input type="radio" class="btn-check" name="menhgia" id="button2" autocomplete="off">
+                            <label class="btn btn-outline-primary text-dark p-2" for="button2"
+                                style="width: 132.6px; height: 72.5px;">
+                                <div class="text-center fw-bold fs-5">50.000đ</div>
+                                <div class="d-flex justify-content-between border-top border-2 pt-1">
+                                    <span class="small text-capitalize" style="font-size: 10px;">giá bán:</span>
+                                    <span class="text-danger fw-bold" style="font-size: 14px;">49.000đ</span>
+                                </div>
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Quantity -->
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center quantitybox">
+                                <h6 class="mb-0">Số lượng</h6>
+                                <div class="input-group ms-3" style="width: 150px;">
+                                    <button class="btn btn-outline-secondary decrease-btn">-</button>
+                                    <input type="number" class="form-control text-center quantity-input" id=""
+                                        value="1">
+                                    <button class="btn btn-outline-secondary increase-btn">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Summary -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h6 class="bg-gray-custom p-3 my-4 fw-bold">Hình thức thanh toán</h6>
+                            <div class="d-flex g-md-3 gap-4">
+                                <!-- MoMo Option -->
+                                <input type="radio" class="btn-check" name="payment_method" data-name="Momo"
+                                    id="payment_momo" autocomplete="off">
+                                <label class="btn btn-light mb-2 d-flex flex-column border py-3" for="payment_momo">
+                                    <img src="https://static.ybox.vn/2022/4/4/1649334330094-anhybox%20(32).png"
+                                        alt="MoMo" width="130" height="75">
+                                    <h5 class="text-center w-100 fw-semibold pt-3 mb-0">MoMo</h5>
+                                </label>
+
+                                <!-- Ngân hàng Option -->
+                                <input type="radio" class="btn-check" name="payment_method" data-name="Ngân hàng"
+                                    id="payment_banking" autocomplete="off">
+                                <label class="btn btn-light mb-2 d-flex flex-column border py-3" for="payment_banking">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOXWr7QoJrIQ2RcPXG4yTsYT7Qb9S3pVHJ4fDq_LCt49HVgtfXdGrcFpPyp8lMhC10aI0&usqp=CAU"
+                                        alt="Ngân hàng" width="130" height="75">
+                                    <h5 class="text-center w-100 fw-semibold pt-3 mb-0">Ngân hàng</h5>
+                                </label>
+
+                                <!-- Card Option -->
+                                <input type="radio" class="btn-check" name="payment_method" id="payment_card"
+                                    data-name="Card" autocomplete="off">
+                                <label class="btn btn-light mb-2 d-flex flex-column border py-3" for="payment_card">
+                                    <img src="https://seoiclick.com/content/uploads/images/dong-tien-bang-the-cao-dien-thoai_636911758606085590.jpg"
+                                        alt="Card" width="130" height="75">
+                                    <h5 class="text-center w-100 fw-semibold pt-3 mb-0">Card</h5>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Email Input -->
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <h6 class="bg-gray-custom p-3 my-4 fw-bold">Thông tin nhận thẻ *</h6>
+                            <span class="text-danger fst-italic">Đề nghị quý khách điền chính xác địa chỉ email để tránh
+                                nhầm lẫn và mất thẻ.</span>
+                            <input type="email" id="emailInputt" class="form-control mt-2"
+                                placeholder="Vui lòng nhập email nhận mã thẻ">
+                            <div id="emailError" class="text-danger mt-2" style="display:none;">Vui lòng nhập email hợp
+                                lệ.
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- Chi tiết giao dịch -->
+                <div class="col-lg-4 col-md-12">
+                    <h6 class="bg-gray-custom p-3 my-4 fw-bold">Chi tiết giao dịch</h6>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Loại mã thẻ</span>
+                            <span id="oderCard" class="text-danger">Chưa chọn</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Mệnh giá</span>
+                            <span id="oderPrice" class="text-danger">Chưa chọn</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Số lượng</span>
+                            <span id="oderQuantity" class="text-danger">1</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Phương thức thanh toán</span>
+                            <span id="oderPayment" class="text-danger">Chưa chọn</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Email nhận</span>
+                            <span id="oderEmail" class="text-danger"></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Phí giao dịch</span>
+                            <span class="text-danger">Miễn phí</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Giảm giá</span>
+                            <span id="oderDiscount" class="text-danger">0đ</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between fs-5">
+                            <strong>Tổng tiền</strong>
+                            <strong id="oderTotalPrice">100.000đ</strong>
+                        </li>
+                    </ul>
+                    <!-- Nếu người dùng chưa đăng nhập, yêu cầu đăng nhập -->
+                    <div sec:authorize="isAnonymous()" class="alert alert-warning" role="alert">
+                        Bạn cần đăng nhập để thực hiện thanh toán.
+                    </div>
+                    <!-- Nút thanh toán -->
+                    <button type="button" class="btn btn-primary w-100 mt-1" id="paymentButton">
+                        THANH TOÁN
+                    </button>
+
+                </div>
+                <form id="form-createOder" method="POST" action="/payment">
+                    <!-- Email nhận thẻ -->
+                    <input type="hidden" name="email" value="" id="hidden-email">
+
+                    <!-- Gamecard ID -->
+                    <input type="hidden" name="gamecardId" value="" id="hidden-gamecard-id">
+
+                    <!-- Số lượng -->
+                    <input type="hidden" name="quantity" value="1" id="hidden-quantity">
+
+                    <!-- Số tiền -->
+                    <input type="hidden" name="amount" value="100000" id="hidden-amount">
+
+                    <!-- Phương thức thanh toán -->
+                    <input type="hidden" name="paymentMethod" value="" id="hidden-payment-method">
+
+                </form>
+
+                <!-- Kiểm tra xem người dùng có đăng nhập chưa -->
+                <div sec:authorize="isAuthenticated()">
+                    <!-- Modal sẽ hiển thị nếu người dùng đã đăng nhập -->
+                    <div class="modal fade" id="emailConfirmationModal" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Thanh toán</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <h5 class="fw-bold">Quét mã QR để thanh toán</h5>
+                                    <!-- Hiển thị mã QR ở đây -->
+                                    <div id="qrCode" class="w-75 mx-auto">
+                                        <img src="https://play-lh.googleusercontent.com/9HT3x5ccHcOdhBgLVsNEE6uV9tsCy4GJkoQ8SiJid6xxdhoZnXtyIVhyFEBzoRvAjc4"
+                                            class="w-100" alt="QR Code">
+                                    </div>
+                                    <br>
+                                    <form action="/payment" method="POST">
+                                        <!-- Các trường dữ liệu cần thiết, ví dụ: ID giao dịch -->
+                                        <input type="hidden" name="transactionId" value="1">
+                                        <button type="button" class="btn btn-primary btn-submitformPayment">Xác nhận
+                                            thanh
+                                            toán</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script layout:fragment="js">
+        $(document).ready(function () {
+            let publishs = {};
+            let cards = [];
+
+            // Fetch publisher data from API
+            $.get("/api/get-listpublisher", function (data) {
+                // Populate the 'publishs' object with publisher details
+                data.forEach(function (publisher) {
+                    publishs[publisher.id] = {
+                        id: publisher.id.toString(),
+                        name: publisher.name,
+                        img: publisher.img,
+                        description: publisher.description,
+                        gamecards: publisher.gamecards // This will hold the cards related to each publisher
+                    };
+
+                    // Add the cards to the cards array
+                    publisher.gamecards.forEach(function (card) {
+                        // Kiểm tra loại giảm giá (type 1 là giảm phần trăm, type 2 là giảm tiền)
+                        let valueDiscount = 0;
+                        if (card.discount) {
+                            if (card.discount.type == 1) {
+                                valueDiscount = card.price * (card.discount.value / 100);
+                            } else if (card.discount.type == 2) {
+                                valueDiscount = card.discount.value;
+                            }
+                        }
+                        cards.push({
+                            id: card.id,
+                            price: card.price,
+                            discount: valueDiscount,
+                            publishId: publisher.id.toString(),
+                            stock: card.stock,
+                        });
+                    });
+                });
+                // Sắp xếp mảng cards theo mệnh giá price từ thấp đến cao
+                cards.sort(function (a, b) {
+                    return a.price - b.price;
+                });
+                renderPublisherList(Object.values(publishs));
+
+            });
+
+            function renderPublisherList(publishers) {
+                const publisherListContainer = $("#publisher-list");
+                publisherListContainer.empty();
+
+                // Lặp qua các nhà cung cấp và tạo HTML cho từng nhà cung cấp
+                publishers.forEach(function (publisher) {
+                    const publisherMarkup = `
+                    <div class="col custom-check">
+                        <!-- Publisher Radio -->
+                        <input type="radio" class="btn-check" name="loaithe" data-name="${publisher.name}" id="${publisher.id}" autocomplete="off">
+                        <label class="btn btn-outline-primary p-1 d-flex align-items-center justify-content-center" for="${publisher.id}" style="height: 80px">
+
+                                <img src="${publisher.img}" alt="${publisher.name}" width="123">
+                        </label>
+                    </div>
+                `;
+
+                    // Thêm phần tử vào container
+                    publisherListContainer.append(publisherMarkup);
+                    $("input[name='loaithe']").trigger("click");
+                });
+            }
+
+            // When a card type is selected (example: Zing or COIN)
+            $("#publisher-list").on('click', "input[name='loaithe']", function () {
+                const Publish_ID = $(this).attr("id"); // Get the card type (Zing or COIN)       
+
+                // Find the selected publisher object
+                const selectedPublish = publishs[Publish_ID];
+                const Publish_Name = selectedPublish.name;
+                $("#oderCard").text(Publish_Name);
+
+                // Find the cards that belong to the selected publish
+                const selectedCards = cards.filter(card => card.publishId === Publish_ID);
+                // Update the denominations and discounts in the UI
+                $("#menhgiabox").empty();
+                hethang = ` <div class="position-absolute top-0 start-0 w-100 h-100 fw-bold bg-dark text-white d-flex align-items-center justify-content-center opacity-75">
+                                Hết thẻ
+                            </div>`;
+
+                selectedCards.forEach(function (card) {
+                    const isOutOfStock = card.stock == 0; // Kiểm tra nếu hết hàng
+                    const renderCard = `
+                    <input type="radio" class="btn-check" name="menhgia" data-id="${card.id}" id="card-${card.id}" autocomplete="off" ${isOutOfStock ? 'disabled' : ''}>
+                    <label class="btn btn-outline-primary text-dark p-2 position-relative" for="card-${card.id}"
+                        style="width: 132.6px; height: 72.5px;">
+                        <div class="text-center fw-bold fs-5">${card.price.toLocaleString("vi-VN")}đ</div>
+                        <div class="d-flex justify-content-between border-top border-2 pt-1">
+                            <span class="small text-capitalize" style="font-size: 10px;">giá bán:</span>
+                            <span class="text-danger text-white:active fw-bold"
+                                style="font-size: 14px;">${(card.price - card.discount).toLocaleString("vi-VN")}đ</span>
+                        </div>
+                        ${isOutOfStock ? hethang : ""}
+                    </label>
+                    `;
+                    $("#menhgiabox").append(renderCard);
+                });
+            });
+
+            // Hàm cập nhật tổng tiền
+            function updateTotal() {
+                const CardId = $("input[name='menhgia']:checked").attr("data-id"); // Lấy ID thẻ đang chọn
+                $("#hidden-gamecard-id").val(CardId);
+
+                const quantity = parseInt($(".quantity-input").val()) || 1; // Lấy số lượng (mặc định là 1 nếu không hợp lệ)
+                $("#hidden-quantity").val(quantity);
+
+                // Tìm thông tin thẻ
+                const card = cards.find(card => card.id == CardId);
+
+                if (card) {
+                    const cardPrice = card.price;
+                    const cardDiscount = card.discount * quantity;
+
+                    // Cập nhật thông tin
+                    $("#oderPrice").text(cardPrice.toLocaleString("vi-VN") + "đ");
+                    $("#oderDiscount").text(cardDiscount.toLocaleString("vi-VN") + "đ");
+
+                    // Tính và hiển thị tổng tiền
+
+                    const totalPrice = (cardPrice - cardDiscount) * quantity;
+                    $("#oderTotalPrice").text(totalPrice.toLocaleString("vi-VN") + "đ");
+                    $("#hidden-amount").val(totalPrice);
+                    $("#oderQuantity").text(quantity);
+                } else {
+                    console.error("Không tìm thấy thẻ được chọn.");
+                }
+            }
+
+            // Lắng nghe sự kiện thay đổi mệnh giá hoặc số lượng
+            $("#menhgiabox, .quantitybox").on("change", "input[name='menhgia'], .quantity-input", function () {
+                updateTotal(); // Cập nhật tổng tiền
+            });
+
+            // Xử lý nút tăng/giảm số lượng
+            $(".quantitybox").on("click", ".increase-btn, .decrease-btn", function () {
+                const quantityInput = $(".quantity-input");
+                let currVal = parseInt(quantityInput.val()) || 1;
+
+                if ($(this).hasClass("increase-btn")) {
+                    currVal++;
+                } else if ($(this).hasClass("decrease-btn") && currVal > 1) {
+                    currVal--; // Giảm số lượng (không xuống dưới 1)
+                }
+
+                quantityInput.val(currVal); // Cập nhật giá trị input
+                updateTotal(); // Cập nhật tổng tiền
+            });
+
+            // Xử lý khi chọn hình thức thanh toán
+            $("input[name='payment_method']").on("click", function () {
+                const paymentMethod = $(this).data("name");
+                $("#oderPayment").text(paymentMethod);
+                $("#hidden-payment-method").val(paymentMethod);
+            });
+
+            // Xử lý khi nhập email
+            $("#emailInputt").on("change", function () {
+                const email = $(this).val().trim();
+                const emailError = $("#emailError");
+                //kiểm tra email hợp lệ
+                if (email.length === 0 || !email.includes("@")) {
+                    emailError.show();
+                } else {
+                    emailError.hide();
+                }
+
+                $("#oderEmail").text(email);
+                $("#hidden-email").val(email);
+            });
+
+            // Xử lý khi nhấn nút thanh toán
+            $("#paymentButton").on("click", function () {
+                // Kiểm tra xem người dùng đã chọn loại thẻ chưa
+                if ($("input[name='loaithe']:checked").length === 0) {
+                    alert("Vui lòng chọn loại thẻ.");
+                    return;
+                }
+
+                // Kiểm tra xem người dùng đã chọn mệnh giá chưa
+                if ($("input[name='menhgia']:checked").length === 0) {
+                    alert("Vui lòng chọn mệnh giá.");
+                    return;
+                }
+
+                // Kiểm tra xem người dùng đã chọn hình thức thanh toán chưa
+                if ($("input[name='payment_method']:checked").length === 0) {
+                    alert("Vui lòng chọn hình thức thanh toán.");
+                    return;
+                }
+
+                // Kiểm tra xem người dùng đã nhập email chưa
+                if ($("#emailInputt").val().trim().length === 0) {
+                    alert("Vui lòng nhập email nhận thẻ.");
+                    return;
+                }
+
+                // Hiển thị modal thanh toán
+                $("#emailConfirmationModal").modal("show");
+            });
+            $(".btn-submitformPayment").on("click", function () {
+                console.log("Thanh toán");
+                $("#form-createOder").submit();
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>

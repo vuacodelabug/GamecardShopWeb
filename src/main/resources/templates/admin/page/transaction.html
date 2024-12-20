@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html layout:decorate="admin/index">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container-fluid" layout:fragment="content">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Giao dịch</h4>
+
+            </div><!-- end card header -->
+            <div class="card-body">
+                <!-- Tìm kiếm -->
+                <form action="">
+                    <div class="row my-4">
+                        <div class="d-flex align-items-center justify-content-center gap-2">
+                            <!-- Trường Tìm Kiếm Văn Bản -->
+                            <input type="text" class="form-control form-control w-25" placeholder="Nhập tên hoặc ID">
+
+                            <!-- Trường Chọn -->
+                            <select class="form-select form-select w-auto">
+                                <option value="">Tất cả</option>
+                                <option value="1">Nhân viên</option>
+                                <option value="2">Khách hàng</option>
+                                <option value="3">Quản lý</option>
+                            </select>
+
+                            <!-- Nút Tìm Kiếm -->
+                            <button class="btn btn-primary">Tìm Kiếm</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- Bảng Danh Sách Giao dịch -->
+                <table class="table table-bordered table-nowrap">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên khách hàng</th>
+                            <th>Mã card</th>
+                            <th>Số Tiền</th>
+                            <th>Ngày Giao Dịch</th>
+                        </tr>
+                    </thead>
+                    <!-- Lặp qua các giao dịch -->
+                    <tr th:each="transaction : ${transactions}">
+                        <td th:text="${transaction.id}"></td>
+                        <td th:text="${transaction.customerName}"></td>
+                        <td th:text="${transaction.gameCard}"></td>
+                        <td th:text="${transaction.formattedTotalPrice}"></td>
+                        <td th:text="${transaction.orderDate}"></td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div><!-- container-fluid -->
+
+    <script layout:fragment="js">
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html layout:decorate="admin/index">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container-fluid" layout:fragment="content">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Đơn hàng</h4>
+            </div><!-- end card header -->
+
+            <div class="card-body">
+                <!-- Tìm kiếm -->
+                <form action="">
+                    <div class="row my-4">
+                        <div class="d-flex align-items-center justify-content-center gap-2">
+                            <!-- Trường Tìm Kiếm Văn Bản -->
+                            <input type="text" class="form-control form-control w-25" placeholder="Nhập tên hoặc ID">
+
+                            <!-- Trường Chọn -->
+                            <select class="form-select form-select w-auto">
+                                <option value="">Tất cả</option>
+                                <option value="1">Nhân viên</option>
+                                <option value="2">Khách hàng</option>
+                                <option value="3">Quản lý</option>
+                            </select>
+
+                            <!-- Nút Tìm Kiếm -->
+                            <button class="btn btn-primary">Tìm Kiếm</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- Bảng Danh Sách Thông tin cá nhân -->
+                <table class="table table-bordered table-nowrap">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên khách hàng</th>
+                            <th>Thẻ game</th>
+                            <th>Tổng tiền</th>
+                            <th>Ngày đặt hàng</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Lặp qua danh sách đơn hàng -->
+                        <tr th:each="order : ${orders}">
+                            <td th:text="${order.id}"></td>
+                            <td th:text="${order.customerName}"></td>
+                            <td th:text="${order.gameCard}"></td>
+                            <td th:text="${order.formattedTotalPrice}"></td>
+                            <td th:text="${order.orderDate}"></td>
+                            <td th:text="${order.status}"></td>
+                            <td>
+                                <button class="btn btn-sm btn-info btn-getOder" th:data-id="${order.id}">Chi
+                                    Tiết</button>
+                                <button class="btn btn-sm btn-danger">Hủy</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div><!-- end card-body -->
+        </div><!-- end card -->
+        <div id="modal-detail" class="modal modal-lg fade" tabindex="-1" aria-labelledby="modal-detailLabel"
+            aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header py-0 border-bottom border-2">
+                        <h5 class="modal-title fw-semibold" id="modal-detailLabel">Chi tiết đơn hàng - Mã đơn #1</h5>
+                        <div class="border-start py-3 ps-2 pe-0 border-2 cursor-pointer" data-bs-dismiss="modal">
+                            <button type="button" class="btn-close" aria-label="Close">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-4">
+                                <label class="form-label">Tên khách hàng</label>
+                                <input type="text" id="customer-name" class="form-control" disabled>
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label">Ngày đặt hàng</label>
+                                <input type="text" id="order-date" class="form-control" disabled>
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label">Trạng thái</label>
+                                <input type="text" id="statuss" class="form-control" disabled>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <table class="table table-bordered align-middle mb-4" id="order-details-table">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Nhà phát hành</th>
+                                    <th>Số lượng</th>
+                                    <th>Khuyến mãi</th>
+                                    <th>Phương thức thanh toán</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Order details will be populated here -->
+                            </tbody>
+                        </table>
+
+                        <hr>
+
+                        <table class="table table-bordered align-middle" id="game-codes-table">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Thẻ game</th>
+                                    <th>Mã nạp</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Game codes will be populated here -->
+                            </tbody>
+                            <tfoot class="table-primary">
+                                <tr>
+                                    <th colspan="3" class="text-start" id="total-price"></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div><!-- container-fluid -->
+
+    <script layout:fragment="js">
+        $(document).ready(function () {
+            // Example of triggering the modal and populating data
+            function showOrderDetails(orderId) {
+                $.ajax({
+                    url: `/admin/order/detail/${orderId}`, // Change this URL to your API endpoint
+                    method: 'GET',
+                    success: function (data) {
+                        // Update modal content
+                        $('#order-id').text(data.id);
+                        $('#customer-name').val(data.customerName);
+                        $('#order-date').val(data.orderDate);
+                        $('#statuss').val(data.status);
+
+                        // Populate order details table (now directly from data)
+                        const orderDetailsTable = $('#order-details-table tbody');
+                        orderDetailsTable.empty(); // Clear previous data
+
+                        // Add order details directly from the data
+                        orderDetailsTable.append(`
+                            <tr>
+                                <td>${data.publisher}</td>
+                                <td>${data.quantity}</td>
+                                <td>${data.discount}</td>
+                                <td>${data.paymentMethod}</td>
+                            </tr>
+                        `);
+
+                        // Populate game codes table
+                        const gameCodesTable = $('#game-codes-table tbody');
+                        gameCodesTable.empty(); // Clear previous data
+                        if (Array.isArray(data.gameCodes) && data.gameCodes.length > 0) {
+                            data.gameCodes.forEach(function (gameCode) {
+                                gameCodesTable.append(`
+                                    <tr>
+                                        <td>${data.gameCardName}</td>
+                                        <td>${gameCode}</td>
+                                    </tr>
+                                `);
+                            });
+                        } else {
+                            gameCodesTable.append(`
+                                <tr><td colspan="3">Không thể load mã thẻ</td></tr>
+                            `);
+                        }
+                        $('#total-price').text(data.formattedTotalPrice);
+
+                        // Show the modal
+                        $('#modal-detail').modal('show');
+                    },
+                    error: function (xhr, status, error) {
+                        alert('There was an error fetching order details.');
+                    }
+                });
+            }
+            // gọi modal
+            $('.btn-getOder').click(function () {
+                const orderId = $(this).data('id');
+                showOrderDetails(orderId);
+            });
+        });
+
+
+
+    </script>
+</body>
+
+</html>

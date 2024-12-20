@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html layout:decorate="admin/index">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <div layout:fragment="css">
+        <!-- Nhúng CSS của Dropzone.js -->
+        <link href="https://cdn.jsdelivr.net/npm/dropzone@5.9.3/dist/min/dropzone.min.css" rel="stylesheet">
+        <!-- Nhúng JS của Dropzone.js -->
+        <script src="https://cdn.jsdelivr.net/npm/dropzone@5.9.3/dist/min/dropzone.min.js"></script>
+    </div>
+</head>
+
+<body>
+    <div class="container-fluid" layout:fragment="content">
+        <!-- Bảng Danh Sách Nhà phát hành -->
+        <div class="card border-0 bg-transparent ">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0">Nhà phát hành</h4>
+                <button type="button" class="btn btn-secondary ms-4" data-bs-toggle="modal"
+                    data-bs-target="#modalCreatePublisher">
+                    +
+                </button>
+
+                <!-- Tìm kiếm -->
+                <form action="" class=" flex-grow-1">
+                    <div class="row">
+                        <div class="d-flex align-items-center justify-content-end gap-2">
+                            <!-- Trường Tìm Kiếm Văn Bản -->
+                            <input type="text" class="form-control form-control w-25" placeholder="Nhập tên hoặc ID">
+
+                            <!-- Nút Tìm Kiếm -->
+                            <button class="btn btn-secondary">Tìm Kiếm</button>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div><!-- end card header -->
+
+            <div class="card-body">
+                <!-- Grid Hình Ảnh và Thông Tin Nhà phát hành -->
+                <div class="row row-cols-2 row-cols-md-5 g-3">
+                    <div class="col" th:each="publisher : ${publishers}" th:id="'block-' + ${publisher.id}">
+                        <div class="card card-animate  mb-0">
+                            <div class="ctm-image-container">
+                                <img th:src="@{${publisher.img}}" alt="Hình Ảnh" class="card-img-top">
+                            </div>
+                            <div class="card-body">
+                                <h5 th:text="${publisher.name}" class="card-title">Nhà phát hành A</h5>
+                                <p th:text="${publisher.description}" class="ctm-card-text">Mô tả về Nhà phát hành
+                                    A.</p>
+                                <div class="d-flex justify-content-end gap-2">
+                                    <button class="btn btn-secondary editPublisherBtn" th:data-id="${publisher.id}">
+                                        Sửa
+                                    </button>
+                                    <button type="submit" th:data-id="${publisher.id}"
+                                        class="btn btn-danger btn-sm btn-deletePubisher">Xóa</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Lặp lại cho các nhà phát hành khác -->
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- container-fluid -->
+
+
+        <!-- Modal tạo nhà phát hành -->
+        <div class="modal fade" id="modalCreatePublisher" tabindex="-1" aria-labelledby="modalCreatePublisherLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title ctm-text-capitalize-first" id="modalCreatePublisherLabel">Tạo Nhà phát
+                            hành</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                    </div>
+                    <form th:action="@{/admin/publisher/create}" method="POST" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Tên nhà phát hành<span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="name" name="publisher_name" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Mô Tả</label>
+                                <textarea class="form-control" id="description" name="publisher_description" rows="4"
+                                    maxlength="500"></textarea>
+                            </div>
+                            <div class="form-group d-flex flex-column gap-2 mb-3" id="myDropzone">
+                                <hr />
+                                <input type="hidden" class="form-control" name="publisher_image" />
+                                <div>
+                                    <i>
+                                        Kéo và thả hoặc nhấn vào đây để tải lên ảnh.<span class="text-danger">*</span>
+                                    </i>
+                                </div>
+                                <div class="fallback">
+                                    <input type="file" accept="image/*" class="form-control fileInput" multiple />
+                                </div>
+                                <input type="text" class="form-control imageUrl"
+                                    placeholder="Hoặc nhập đường link ảnh" />
+                                <!-- Hiển thị hình ảnh và nút xóa -->
+
+                                <div class="d-flex align-content-start justify-content-center">
+                                    <div class="flex-grow-1">
+                                        <button id="gridImageButton" class="btn opacity-0" style="display: none;"
+                                            type="button">x</button>
+                                    </div>
+                                    <img class="mt-2 previewImage" src="#" alt="Không thể tìm thấy ảnh" />
+                                    <div class="flex-grow-1">
+                                        <button class="btn btn-removeImg" style="display: none;"
+                                            type="button">x</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-soft-primary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-secondary">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal sửa nhà phát hành -->
+        <div class="modal fade" id="modalUpdatePublisher" tabindex="-1" aria-labelledby="modalUpdatePublisherLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title ctm-text-capitalize-first" id="modalUpdatePublisherLabel">Sửa Nhà phát
+                            hành</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                    </div>
+                    <form id="formUpdatePublisher" method="POST" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <input type="hidden" id="publisherId" value="">
+
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Tên Nhà phát hành <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="name" name="publisher_name" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Mô Tả</label>
+                                <textarea class="form-control" id="description" name="publisher_description" rows="4"
+                                    maxlength="500"></textarea>
+                            </div>
+                            <div class="form-group d-flex flex-column gap-2 mb-3" id="myDropzone">
+                                <hr />
+                                <input type="hidden" class="form-control" name="publisher_image" />
+                                <div>
+                                    <i>
+                                        Kéo và thả hoặc nhấn vào đây để tải lên ảnh.<span class="text-danger">*</span>
+                                    </i>
+                                </div>
+                                <div class="fallback">
+                                    <input type="file" accept="image/*" class="form-control fileInput" multiple />
+                                </div>
+                                <input type="text" class="form-control imageUrl"
+                                    placeholder="Hoặc nhập đường link ảnh" />
+                                <!-- Hiển thị hình ảnh và nút xóa -->
+
+                                <div class="d-flex align-content-start justify-content-center">
+                                    <div class="flex-grow-1">
+                                        <button id="gridImageButton" class="btn opacity-0" style="display: none;"
+                                            type="button">x</button>
+                                    </div>
+                                    <img class="mt-2 previewImage" src="#" alt="Không thể tìm thấy ảnh" />
+                                    <div class="flex-grow-1">
+                                        <button class="btn btn-removeImg" style="display: none;"
+                                            type="button">x</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-soft-primary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="button" class="btn btn-secondary" id="btn-updatePublisher">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- container-fluid -->
+
+    <script layout:fragment="js">
+
+        const $fileInput = $(".fileInput");
+        const $imageUrlInput = $(".imageUrl");
+        const $previewImage = $(".previewImage");
+        const $btnRemoveImg = $(".btn-removeImg");
+        const $gridImageButton = $("#gridImageButton");
+        const $InputImg = $("input[name='publisher_image']");
+
+        // Xử lý khi người dùng chọn file
+        $fileInput.on("change", function () {
+            const fileValue = this.value;
+
+            //kiểm tra xem người dùng đã chọn file chưa
+            if (fileValue) {
+                $imageUrlInput.prop("disabled", true);
+                $imageUrlInput.val("");
+            } else {
+                $imageUrlInput.prop("disabled", false);
+            }
+
+            // Hiển thị hình ảnh từ file
+            const files = this.files;
+            if (files.length > 0) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    var imgbase64 = e.target.result;
+                    $previewImage.attr("src", imgbase64).show();
+                    $InputImg.val(imgbase64);
+                    $btnRemoveImg.show();
+                    $gridImageButton.show();
+                };
+                reader.readAsDataURL(files[0]);
+            }
+        });
+
+        // Xử lý khi người dùng nhập URL
+        $imageUrlInput.on("input", function () {
+            const imageUrlValue = this.value;
+
+            if (imageUrlValue) {
+                $fileInput.prop("disabled", true);
+                $fileInput.val("");
+            } else {
+                $fileInput.prop("disabled", false);
+            }
+
+            // Hiển thị hình ảnh từ URL
+            if (imageUrlValue) {
+                $previewImage.attr("src", imageUrlValue).show();
+                $InputImg.val(imageUrlValue);
+                $btnRemoveImg.show();
+                $gridImageButton.show();
+            } else {
+                $previewImage.hide();
+                $btnRemoveImg.hide();
+                $gridImageButton.hide();
+            }
+        });
+
+        // Xử lý khi nhấn nút "Xóa ảnh"
+        $btnRemoveImg.on("click", function () {
+            // Ẩn ảnh và nút xóa
+            $previewImage.hide();
+            $btnRemoveImg.hide();
+            $gridImageButton.hide();
+
+            // Đặt lại giá trị cho các trường input
+            $fileInput.val("");
+            $imageUrlInput.val("");
+            $InputImg.val("");
+
+
+            // Bật lại cả hai trường input
+            $fileInput.prop("disabled", false);
+            $imageUrlInput.prop("disabled", false);
+        });
+
+        // xóa publisher
+        $(".btn-deletePubisher").on("click", function () {
+            const idPubisher = $(this).data("id");
+            if (confirm("Bạn có chắc chắn muốn xóa nhà phát hành này không?")) {
+                $.ajax({
+                    url: "/admin/publisher/delete/" + idPubisher,
+                    method: "post",
+                    success: function (response) {
+                        if (response == "success") {
+                            $("#block-" + idPubisher).remove();
+                            alert1s("Xóa nhà phát hành thành công!");
+
+                        } else {
+                            alert1s("Xóa nhà phát hành thất bại!");
+
+                        }
+                    },
+                    error: function (error) {
+                        alert1s("Xóa nhà phát hành thất bại!");
+                    }
+                });
+            }
+        });
+
+        // Khi người dùng nhấn vào nút sửa nhà phát hành, AJAX sẽ gọi API để lấy thông tin
+        $('html').on('click', '.editPublisherBtn', function () {
+            const publisherId = $(this).data('id');
+
+            // Gửi yêu cầu AJAX để lấy thông tin nhà phát hành
+            $.ajax({
+                url: `/admin/publisher/api/detail/${publisherId}`,  // URL API để lấy thông tin nhà phát hành
+                type: 'GET',
+                success: function (response) {
+                    // Đổ dữ liệu vào modal
+                    $('#modalUpdatePublisher #name').val(response.name);
+                    $('#modalUpdatePublisher #description').val(response.description);
+                    $('#modalUpdatePublisher input[name="publisher_image"]').val(response.img);
+                    if (response.img && response.img.startsWith('https')) {
+                        // Nếu img bắt đầu bằng https
+                        $('#modalUpdatePublisher .imageUrl').val(response.img);
+                    }
+
+                    $('#modalUpdatePublisher .previewImage').attr('src', response.img ? response.img : '#').show();
+                    $('#modalUpdatePublisher .btn-removeImg').show();
+                    $gridImageButton.show();
+                    $('#publisherId').val(response.id);
+                    // Mở modal sửa nhà phát hành
+                    $('#modalUpdatePublisher').modal('show');
+
+                },
+                error: function (error) {
+                    console.error('Có lỗi: ', error);
+                }
+            });
+        });
+
+        // Gửi yêu cầu cập nhật qua AJAX
+        $('#btn-updatePublisher').on('click', function () {
+            const publisherId = $('#publisherId').val();
+            // Giả sử form có id là 'myForm'
+            const formId = "#formUpdatePublisher";
+
+            // Lấy tất cả dữ liệu của form dưới dạng object
+            const formData = $(formId).serializeArray();
+
+            $.ajax({
+                url: `/admin/publisher/api/update/${publisherId}`,
+                type: 'POST',
+                contentType: "application/x-www-form-urlencoded",
+                data: formData,
+                success: function (response) {
+                    $('#modalUpdatePublisher').modal('hide');
+                    // Cập nhật giao diện
+                    updatePublisherBlock(publisherId, response);
+                    setTimeout(() => {
+                        alert1s('Cập nhật thành công!')
+                    }, 1000);
+                },
+                error: function (error) {
+                    console.error('Lỗi khi cập nhật:', error);
+                    alert1s('Không thể cập nhật nhà phát hành!');
+                }
+            });
+
+            function updatePublisherBlock(publisherId, updatedPublisher) {
+                const publisherBlock = $(`#block-${publisherId}`);
+
+                // Cập nhật hình ảnh
+                publisherBlock.find('img').attr('src', updatedPublisher.img);
+
+                // Cập nhật tên
+                publisherBlock.find('.card-title').text(updatedPublisher.name);
+
+                // Cập nhật mô tả
+                publisherBlock.find('.ctm-card-text').text(updatedPublisher.description);
+            }
+
+
+        });
+
+
+
+    </script>
+</body>
+
+</html>

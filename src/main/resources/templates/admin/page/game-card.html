@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html layout:decorate="admin/index">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mệnh giá thẻ game</title>
+</head>
+
+<body>
+    <div class="container-fluid" layout:fragment="content">
+
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Thẻ Game</h4>
+                <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addGameCardModal">Thêm Thẻ
+                    Game</button>
+
+            </div><!-- end card header -->
+
+            <div class="card-body">
+                <!-- Tìm kiếm -->
+                <form action="">
+                    <div class="row my-4">
+                        <div class="d-flex align-items-center justify-content-center gap-2">
+                            <!-- Trường Tìm Kiếm Văn Bản -->
+                            <input type="text" class="form-control form-control w-25" placeholder="Nhập tên hoặc ID">
+
+                            <!-- Trường Chọn -->
+                            <select class="form-select form-select w-auto">
+                                <option value="">Tất cả</option>
+                                <option value="1">Nhà phát hành 1</option>
+                                <option value="2">Nhà phát hành 2</option>
+                                <option value="3">Nhà phát hành 3</option>
+                            </select>
+
+                            <!-- Nút Tìm Kiếm -->
+                            <button class="btn btn-primary">Tìm Kiếm</button>
+                        </div>
+                    </div>
+                </form>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nhà phát hành</th>
+                            <th>Tên thẻ</th>
+                            <th>Giá trị</th>
+                            <th>Chương trình giảm giá</th>
+                            <th>Số lượng</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="gamecard : ${gamecards}" th:id="'block-' + ${gamecard.id}">
+                            <td th:text="${gamecard.id}"></td>
+                            <td th:text="${gamecard.publisherName}"></td>
+                            <td th:text="${gamecard.cardName}"></td>
+                            <td th:text="${gamecard.formattedPrice}"></td>
+                            <td th:text="${gamecard.discountName}"></td>
+                            <td th:text="${gamecard.stock}"></td>
+                            <td>
+                                <button class="btn btn-sm btn-warning btn-updateGamecard" th:data-id="${gamecard.id}">
+                                    Sửa
+                                </button>
+                                <button class="btn btn-sm btn-danger btn-deleteGamecard" th:data-id="${gamecard.id}">
+                                    Xóa
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+
+        <!-- Modal Thêm Thẻ Game -->
+        <div class="modal fade" id="addGameCardModal" tabindex="-1" aria-labelledby="addGameCardModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addGameCardModalLabel">Thêm Thẻ Game <span
+                                class="text-danger">*</span></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/admin/game-card/create" method="post">
+                            <div class="mb-3">
+                                <label for="gameName" class="form-label">Thẻ Game<span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="name" id="gameName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="publisher" class="form-label">Nhà phát hành<span
+                                        class="text-danger">*</span></label>
+                                <select class="form-control" name="publisher.id" id="publisher" required>
+                                    <option value="">Chọn Nhà phát hành</option>
+                                    <th:block th:each="publisher : ${publishers}">
+                                        <option th:value="${publisher.id}" th:text="${publisher.name}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="value" class="form-label format-number">Giá Trị<span
+                                        class="text-danger">*</span></label>
+                                <input type="number" class="form-control" name="price" id="value" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="stock" class="form-label">Số lượng mã thẻ</label>
+                                <input type="number" class="form-control" name="stock" id="stock" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="discount" class="form-label">Chương trình giảm giá</label>
+                                <select class="form-control" name="discount.id" id="discount">
+                                    <option value="">Không giảm giá</option>
+                                    <th:block th:each="discount : ${discounts}">
+                                        <option th:value="${discount.id}" th:text="${discount.name}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                <button type="submit" class="btn btn-success" id="btn-createGamecart">Lưu</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal Chỉnh Sửa Thẻ Game -->
+        <div class="modal fade" id="editGameCardModal" tabindex="-1" aria-labelledby="editGameCardModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title ctm-text-capitalize-first" id="editGameCardModalLabel">Chỉnh Sửa Thẻ Game
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editGameCardForm">
+                            <input type="hidden" name="id" id="editGameCardId">
+
+                            <div class="mb-3">
+                                <label for="editGameName" class="form-label">Thẻ game <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="editGameName" value="Thẻ Game A" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="publisher" class="form-label">Nhà phát hành<span
+                                        class="text-danger">*</span></label>
+                                <select class="form-control" name="publisherId" id="editPublisher" required>
+                                    <option value="">Chọn Nhà phát hành</option>
+                                    <th:block th:each="publisher : ${publishers}">
+                                        <option th:value="${publisher.id}" th:text="${publisher.name}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editValue" class="form-label ">Giá Trị<span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control format-number" id="editValue" value="100000"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editDiscount" class="form-label">Chương Trình Giảm
+                                    Giá</label>
+                                <select class="form-control" name="discount.id" id="editDiscount">
+                                    <option value="">Không có giảm giá</option>
+                                    <th:block th:each="discount : ${discounts}">
+                                        <option th:value="${discount.id}" th:text="${discount.name}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                <button type="submit" class="btn btn-success" id="saveChangesBtn">Lưu</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div><!-- container-fluid -->
+
+    <script layout:fragment="js">
+        // jQuery Validation
+        $(document).ready(function () {
+            $('#addGameCardForm').submit(function (e) {
+                e.preventDefault();
+
+                // Publisher validation
+                if ($('#publisher').val() === '') {
+                    alert1s('Vui lòng chọn nhà phát hành!');
+                    return;
+                }
+
+                // Value validation (ensure it's a positive number)
+                let value = $('#value').val();
+                if (value === '' || value <= 0) {
+                    alert1s('Vui lòng nhập giá trị hợp lệ!');
+                    return;
+                }
+
+                // Format the value as currency (e.g., 100000 to 100,000 VND)
+                let formattedValue = parseInt(value).toLocaleString('vi-VN');
+                $('#value').val(formattedValue);
+
+                // If validation passes, save the data (your saving logic here)
+                alert1s('Thêm Thẻ Game thành công!');
+                $('#addGameCardModal').modal('hide');
+            });
+
+            $('#btn-createGamecart').click(function (e) {
+                e.preventDefault();
+
+                // Thu thập dữ liệu từ form
+                const gameCardData = {
+                    cardName: $('#gameName').val(),
+                    publisherId: $('#publisher').val(),
+                    discountId: $('#discount').val() || null,
+                    stock: $('#stock').val() || 0,
+                    price: $('#value').val()
+                };
+
+                // Gửi AJAX request
+                $.ajax({
+                    url: '/admin/game-card/create',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(gameCardData),
+                    success: function (response) {
+                        $('#addGameCardModal').modal('hide');
+                        alert1s("Thêm thẻ game thành công!");
+                        location.reload();
+                    },
+                    error: function (xhr) {
+                        console.log(xhr);
+                    }
+                });
+            });
+
+            $(document).on('click', '.btn-updateGamecard', function () {
+                const gamecardId = $(this).data('id');
+
+                // Gửi request đến server để lấy thông tin thẻ game
+                $.ajax({
+                    url: '/admin/game-card/detail/' + gamecardId, // Đường dẫn API
+                    type: 'GET',
+                    success: function (gamecard) {
+                        // Điền thông tin vào modal
+                        $('#editGameCardModal #editGameName').val(gamecard.cardName);
+                        $('#editGameCardModal #editGameCardId').val(gamecard.id);
+                        $('#editGameCardModal #editPublisher').val(gamecard.publisherId);
+                        $('#editGameCardModal #editValue').val(gamecard.price);
+                        $('#editGameCardModal #editDiscount').val(gamecard.discountId || '');
+                        // // Thiết lập giá trị "selected" cho option trong dropdown
+                        // $('#editGameCardModal #editDiscount option').each(function () {
+                        //     if ($(this).val() == gamecard.discountId) {
+                        //         $(this).prop('selected', true);
+                        //     }
+                        // });
+                        // $('#editGameCardModal #editPublisher option').each(function () {
+                        //     if ($(this).val() == gamecard.publisherId) {
+                        //         $(this).prop('selected', true);
+                        //     }
+                        // });
+
+                        // Hiển thị modal
+                        $('#editGameCardModal').modal('show');
+                    },
+                    error: function (error) {
+                        console.error("Lỗi khi lấy thông tin thẻ game:", error);
+                    }
+                });
+            });
+            $('#editGameCardForm').on('submit', function (event) {
+                event.preventDefault();
+
+                const gamecardData = {
+                    id: $('#editGameCardId').val(),
+                    cardName: $('#editGameName').val(),
+                    publisherId: $('#editPublisher').val(),
+                    price: $('#editValue').val(),
+                    discountId: $('#editDiscount').val()
+                };
+
+
+                $.ajax({
+                    url: '/admin/game-card/update',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(gamecardData),
+                    success: function () {
+                        alert1s("Cập nhật thẻ game thành công!");
+                        location.reload();
+                    },
+                    error: function (error) {
+                        console.error("Lỗi khi cập nhật thẻ game:", error);
+                        alert1s("Cập nhật thẻ game thất bại. Vui lòng kiểm tra lại.");
+                    }
+                });
+            });
+
+            $(document).on('click', '.btn-deleteGamecard', function () {
+                const gamecardId = $(this).data('id');
+                const isDelete = confirm("Bạn có chắc chắn muốn xóa thẻ game này không?");
+                if (isDelete) {
+                    $.ajax({
+                        url: '/admin/game-card/delete/' + gamecardId,
+                        type: 'DELETE',
+                        success: function () {
+                            alert1s("Xóa thẻ game thành công!");
+                            $('#block-' + gamecardId).remove();
+                        },
+                        error: function (error) {
+                            console.error("Lỗi khi xóa thẻ game:", error);
+                            alert1s("Xóa thẻ game thất bại. Vui lòng kiểm tra lại.");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
