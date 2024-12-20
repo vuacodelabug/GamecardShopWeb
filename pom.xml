@@ -99,7 +99,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.13.0</version> <!-- Sử dụng phiên bản mới nhất -->
         <configuration>
-          <release>21</release> <!-- Đặt release version là 23 -->
+          <release>17</release> <!-- Đặt release version là 23 -->
         </configuration>
       </plugin>
       <plugin>
