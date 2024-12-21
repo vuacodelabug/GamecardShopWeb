@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.4.0</version>
+	<version>3.3.5</version>
     <relativePath /> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.ganecardshop</groupId>
@@ -26,18 +26,17 @@
     <url />
   </scm>
   <properties>
-    <java.version>23</java.version>
+    <java.version>17</java.version>
   </properties>
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
-    <dependency>
-      <groupId>jakarta.persistence</groupId>
-      <artifactId>jakarta.persistence-api</artifactId>
-      <version>3.1.0</version>
-    </dependency>
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-jdbc</artifactId>
+	</dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-thymeleaf</artifactId>

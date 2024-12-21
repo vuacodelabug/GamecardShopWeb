@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import com.ganecardshop.model.Gamecard;
 
+@Repository
 public interface GamecardRepository extends JpaRepository<Gamecard, Integer> {
     public List<Gamecard> findByPublisherId(Integer publisherId);
 

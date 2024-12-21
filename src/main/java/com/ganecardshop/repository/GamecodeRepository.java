@@ -7,9 +7,11 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import com.ganecardshop.model.Gamecode;
 
+@Repository
 public interface GamecodeRepository extends JpaRepository<Gamecode, Integer> {
         List<Gamecode> findByIsUsed(Integer isUsed);
 
