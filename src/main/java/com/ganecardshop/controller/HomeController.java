@@ -35,8 +35,10 @@ public class HomeController {
 	@Autowired
 	OrderService orderService;
 
-	@GetMapping("/home")
+	@GetMapping({ "/", "/home" })
 	public String getHome(Model model) {
+		List<Publisher> getListPublishers = publisherService.getAllPublishers();
+		model.addAttribute("publishers", getListPublishers);
 		return "user/page/home";
 	}
 

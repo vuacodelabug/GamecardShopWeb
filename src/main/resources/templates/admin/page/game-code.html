@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html layout:decorate="admin/index">
+<html layout:decorate="~{admin/index}">
 
 <head>
     <meta charset="UTF-8">
@@ -29,41 +29,43 @@
 
 
                 <!-- Bảng Danh Sách Mã thẻ Game -->
-                <table class="table table-bordered table-nowrap">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Id đơn hàng</th>
-                            <th>Mã Thẻ</th>
-                            <th>Nhà phát hành</th>
-                            <th>Thẻ Game</th>
-                            <th>Ngày dùng</th>
-                            <th>Trạng Thái</th>
-                            <th>Hành Động</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="gamecode : ${gamecodes}" th:id="'block'+${gamecode.id}">
-                            <td th:text="${gamecode.id}"></td>
-                            <td th:text="${gamecode.orderId}"></td>
-                            <td th:text="${gamecode.code}"></td>
-                            <td th:text="${gamecode.publisherName}"></td>
-                            <td th:text="${gamecode.gameCardName}"></td>
-                            <td th:text="${gamecode.usedDate}"> </td>
-                            <td>
-                                <span th:class="${gamecode.isUsed ? 'badge bg-danger' : 'badge bg-success'}"
-                                    th:text="${gamecode.isUsed ? 'Đã sử dụng' : 'Chưa sử dụng'}"></span>
-                            </td>
-                            <td>
-                                <button class="btn btn-sm btn-info btn-updateGamecode"
-                                    th:data-id="${gamecode.id}">Sửa</button>
-                                <button class="btn btn-sm btn-danger btn-deleteGamecode"
-                                    th:data-id="${gamecode.id}">Xóa</button>
-
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle table-striped table-bordered table-nowrap">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Id đơn hàng</th>
+                                <th>Mã Thẻ</th>
+                                <th>Nhà phát hành</th>
+                                <th>Thẻ Game</th>
+                                <th>Ngày dùng</th>
+                                <th>Trạng Thái</th>
+                                <th>Hành Động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="gamecode : ${gamecodes}" th:id="'block'+${gamecode.id}">
+                                <td th:text="${gamecode.id}"></td>
+                                <td th:text="${gamecode.orderId}"></td>
+                                <td th:text="${gamecode.code}"></td>
+                                <td th:text="${gamecode.publisherName}"></td>
+                                <td th:text="${gamecode.gameCardName}"></td>
+                                <td th:text="${gamecode.usedDate}"> </td>
+                                <td>
+                                    <span th:class="${gamecode.isUsed ? 'badge bg-danger' : 'badge bg-success'}"
+                                        th:text="${gamecode.isUsed ? 'Đã sử dụng' : 'Chưa sử dụng'}"></span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-info btn-updateGamecode"
+                                        th:data-id="${gamecode.id}">Sửa</button>
+                                    <button class="btn btn-sm btn-danger btn-deleteGamecode"
+                                        th:data-id="${gamecode.id}">Xóa</button>
+    
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
             </div>
             <!-- container-fluid -->

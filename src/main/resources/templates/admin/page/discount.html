@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html layout:decorate="admin/index">
+<html layout:decorate="~{admin/index}">
 
 <head>
     <meta charset="UTF-8">
@@ -44,51 +44,55 @@
                 </form>
 
                 <!-- Bảng Danh Sách Thông tin cá nhân -->
-                <table class="table table-bordered table-nowrap">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Mã giảm giá</th>
-                            <th>Giá Trị</th>
-                            <th>Loại</th>
-                            <th>Ngày Bắt Đầu</th>
-                            <th>Ngày Kết Thúc</th>
-                            <th>trạng thái</th>
-                            <th>Hành Động</th>
-                        </tr>
-                    </thead>
-                    <tr th:each="discount : ${discounts}" th:id="'block-' + ${discount.id}">
-                        <td th:text="${discount.id}">1</td>
-                        <td>
-                            <span th:text="${discount.name}">Giảm 10%</span><br>
-                            <em th:text="${discount.description}" id="td_description" style="font-size: 10px;">Giảm giá 20%</em>
-                        </td>
-                        <td>
-                            <span th:text="${discount.value}">10</span>
-                            <span th:if="${discount.type == 1}" th:text="'%'"></span>
-                            <span th:if="${discount.type != 1}" th:text="'đ'"></span>
-                        </td>
-                        <td>
-                            <span th:if="${discount.type == 1}">Giảm theo phần trăm</span>
-                            <span th:if="${discount.type == 2}">Giảm trực tiếp (VND)</span>
-                        </td>
-                        <td th:text="${discount.formattedStartDay}">2024-11-01 20:00</td>
-                        <td th:text="${discount.formattedEndDay}">2024-11-30 20:00</td>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle table-striped table-bordered table-nowrap">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Mã giảm giá</th>
+                                <th>Giá Trị</th>
+                                <th>Loại</th>
+                                <th>Ngày Bắt Đầu</th>
+                                <th>Ngày Kết Thúc</th>
+                                <th>trạng thái</th>
+                                <th>Hành Động</th>
+                            </tr>
+                        </thead>
+                        <tr th:each="discount : ${discounts}" th:id="'block-' + ${discount.id}">
+                            <td th:text="${discount.id}">1</td>
+                            <td>
+                                <span th:text="${discount.name}">Giảm 10%</span><br>
+                                <em th:text="${discount.description}" id="td_description" style="font-size: 10px;">Giảm
+                                    giá 20%</em>
+                            </td>
+                            <td>
+                                <span th:text="${discount.value}">10</span>
+                                <span th:if="${discount.type == 1}" th:text="'%'"></span>
+                                <span th:if="${discount.type != 1}" th:text="'đ'"></span>
+                            </td>
+                            <td>
+                                <span th:if="${discount.type == 1}">Giảm theo phần trăm</span>
+                                <span th:if="${discount.type == 2}">Giảm trực tiếp (VND)</span>
+                            </td>
+                            <td th:text="${discount.formattedStartDay}">2024-11-01 20:00</td>
+                            <td th:text="${discount.formattedEndDay}">2024-11-30 20:00</td>
 
-                        <td>
-                            <!-- 1: đang áp dụng, 2: đã hết hạn, 3: đã hủy -->
-                            <span th:if="${discount.status == 1}" class="badge bg-success">Đang áp dụng</span>
-                            <span th:if="${discount.status == 2}" class="badge bg-danger">Đã hết hạn</span>
-                            <span th:if="${discount.status == 3}" class="badge bg-warning">Đã hủy</span>
-                        </td>
-                        <td>
-                            <button class="btn btn-sm btn-warning btn-updateDiscount"
-                                th:data-id="${discount.id}">Sửa</button>
-                            <button class="btn btn-sm btn-danger btn-deleteDiscount"
-                                th:data-id="${discount.id}">Xóa</button>
-                        </td>
-                    </tr>
-                </table>
+                            <td>
+                                <!-- 1: đang áp dụng, 2: đã hết hạn, 3: đã hủy -->
+                                <span th:if="${discount.status == 1}" class="badge bg-success">Đang áp dụng</span>
+                                <span th:if="${discount.status == 2}" class="badge bg-danger">Đã hết hạn</span>
+                                <span th:if="${discount.status == 3}" class="badge bg-warning">Đã hủy</span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-warning btn-updateDiscount"
+                                    th:data-id="${discount.id}">Sửa</button>
+                                <button class="btn btn-sm btn-danger btn-deleteDiscount"
+                                    th:data-id="${discount.id}">Xóa</button>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
             </div><!-- end card-body -->
         </div><!-- end card -->
 

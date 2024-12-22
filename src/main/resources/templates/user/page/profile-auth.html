@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html layout:decorate="user/index">
+<html layout:decorate="~{user/index}">
 
 <head>
 
@@ -28,6 +28,8 @@
     
                                     <h5 th:text="${user.role}">User</h5>
                                 </div>
+
+                                <!-- chuyển tab chỉnh sửa  -->
                             </div>
     
                             <hr>
@@ -72,70 +74,72 @@
                         </div>
     
                         <!-- Table -->
-                        <table class="table table-nowrap align-middle">
-                            <thead class="table-primary">
-                                <tr>
-                                    <th scope="col" class="text-center" style="width: 7%;">Id</th>
-                                    <th scope="col" style="width: 33%;">Nhà phát hành</th>
-                                    <th scope="col" style="width: 20%;">Ngày</th>
-                                    <th scope="col" style="width: 20%;">Trạng thái</th>
-                                    <th scope="col" style="width: 20%;" class="text-end pe-3">Thành tiền</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row" class="text-center">1</th>
-                                    <!-- Nhà phát hành + nút thông tin -->
-                                    <td>
-                                        <div class="d-flex justify-content-between align-items-center w-100">
-                                            <span class="text-wrap"> Garena</span>
-    
-                                            <i class="ri-eye-line px-3 cursor-pointer" data-bs-toggle="modal"
-                                                data-bs-target="#modal-detail"></i>
-                                        </div>
-                                    </td>
-                                    <td>10/02/2022</td>
-                                    <td><span class="badge text-bg-primary fs-13 fw-normal">Tạm giữ</span></td>
-                                    <td class="text-end pe-3">50.000 đ</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="text-center">2</th>
-                                    <!-- Nhà phát hành + nút thông tin -->
-                                    <td>
-                                        <div class="d-flex justify-content-between align-items-center w-100">
-                                            <span class="text-wrap"> Viettel</span>
-    
-                                            <i class="ri-eye-line px-3 cursor-pointer" data-bs-toggle="modal"
-                                                data-bs-target="#modal-detail"></i>
-                                        </div>
-                                    </td>
-                                    <td>13/05/2021</td>
-                                    <td><span class="badge text-bg-success fs-13 fw-normal">Thành công</span></td>
-                                    <td class="text-end pe-3">20.000 đ</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="text-center">3</th>
-                                    <!-- Nhà phát hành + nút thông tin -->
-                                    <td>
-                                        <div class="d-flex justify-content-between align-items-center w-100">
-                                            <span class="text-wrap"> Zing</span>
-    
-                                            <i class="ri-eye-line px-3 cursor-pointer" data-bs-toggle="modal"
-                                                data-bs-target="#modal-detail"></i>
-                                        </div>
-                                    </td>
-                                    <td>17/05/2021</td>
-                                    <td><span class="badge text-bg-success fs-13 fw-normal">Thành công</span></td>
-                                    <td class="text-end pe-3">120.000 đ</td>
-                                </tr>
-                            </tbody>
-                            <tfoot class="table-primary">
-                                <tr>
-                                    <th colspan="4" class="ps-3">Tổng chi</th>
-                                    <th class="text-end pe-3">200.000 đ</th>
-                                </tr>
-                            </tfoot>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-nowrap align-middle">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th scope="col" class="text-center" style="width: 7%;">Id</th>
+                                        <th scope="col" style="width: 33%;">Thẻ</th>
+                                        <th scope="col" style="width: 20%;">Ngày</th>
+                                        <th scope="col" style="width: 20%;">Trạng thái</th>
+                                        <th scope="col" style="width: 20%;" class="text-end pe-3">Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="text-center">1</th>
+                                        <!-- Nhà phát hành + nút thông tin -->
+                                        <td>
+                                            <div class="d-flex justify-content-between align-items-center w-100">
+                                                <span class="text-wrap"> Garena</span>
+        
+                                                <i class="ri-eye-line px-3 cursor-pointer" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-detail"></i>
+                                            </div>
+                                        </td>
+                                        <td>10/02/2022</td>
+                                        <td><span class="badge text-bg-primary fs-13 fw-normal">Tạm giữ</span></td>
+                                        <td class="text-end pe-3">50.000 đ</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="text-center">2</th>
+                                        <!-- Nhà phát hành + nút thông tin -->
+                                        <td>
+                                            <div class="d-flex justify-content-between align-items-center w-100">
+                                                <span class="text-wrap"> Viettel</span>
+        
+                                                <i class="ri-eye-line px-3 cursor-pointer" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-detail"></i>
+                                            </div>
+                                        </td>
+                                        <td>13/05/2021</td>
+                                        <td><span class="badge text-bg-success fs-13 fw-normal">Thành công</span></td>
+                                        <td class="text-end pe-3">20.000 đ</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="text-center">3</th>
+                                        <!-- Nhà phát hành + nút thông tin -->
+                                        <td>
+                                            <div class="d-flex justify-content-between align-items-center w-100">
+                                                <span class="text-wrap"> Zing</span>
+        
+                                                <i class="ri-eye-line px-3 cursor-pointer" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-detail"></i>
+                                            </div>
+                                        </td>
+                                        <td>17/05/2021</td>
+                                        <td><span class="badge text-bg-success fs-13 fw-normal">Thành công</span></td>
+                                        <td class="text-end pe-3">120.000 đ</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot class="table-primary">
+                                    <tr>
+                                        <th colspan="4" class="ps-3">Tổng chi</th>
+                                        <th class="text-end pe-3">200.000 đ</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                         <!-- /Table -->
                     </div>
                 </div>
@@ -283,7 +287,6 @@
                             <div class=" border-start py-3 ps-2 pe-0 border-2 cursor-pointer" data-bs-dismiss="modal">
                                 <button type="button" class="btn-close" aria-label="Close">
                                 </button>
-    
                             </div>
                         </div>
                         <div class="modal-body">

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html layout:decorate="admin/index">
+<html layout:decorate="~{admin/index}">
 
 <head>
     <meta charset="UTF-8">
@@ -36,25 +36,28 @@
                     </div>
                 </form>
                 <!-- Bảng Danh Sách Giao dịch -->
-                <table class="table table-bordered table-nowrap">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Tên khách hàng</th>
-                            <th>Mã card</th>
-                            <th>Số Tiền</th>
-                            <th>Ngày Giao Dịch</th>
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle table-striped table-bordered table-nowrap">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên khách hàng</th>
+                                <th>Mã card</th>
+                                <th>Số Tiền</th>
+                                <th>Ngày Giao Dịch</th>
+                            </tr>
+                        </thead>
+                        <!-- Lặp qua các giao dịch -->
+                        <tr th:each="transaction : ${transactions}">
+                            <td th:text="${transaction.id}"></td>
+                            <td th:text="${transaction.customerName}"></td>
+                            <td th:text="${transaction.gameCard}"></td>
+                            <td th:text="${transaction.formattedTotalPrice}"></td>
+                            <td th:text="${transaction.orderDate}"></td>
                         </tr>
-                    </thead>
-                    <!-- Lặp qua các giao dịch -->
-                    <tr th:each="transaction : ${transactions}">
-                        <td th:text="${transaction.id}"></td>
-                        <td th:text="${transaction.customerName}"></td>
-                        <td th:text="${transaction.gameCard}"></td>
-                        <td th:text="${transaction.formattedTotalPrice}"></td>
-                        <td th:text="${transaction.orderDate}"></td>
-                    </tr>
-                </table>
+                    </table>
+                </div>
             </div>
 
         </div>

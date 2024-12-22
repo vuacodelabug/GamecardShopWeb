@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html layout:decorate="user/index">
+<html layout:decorate="~{user/index}">
 
 <head>
     <!--seo Title -->
@@ -21,17 +21,17 @@
                 </div>
                 <div class="carousel-inner">
                     <!-- SEO thẻ alt cho hình ảnh -->
-                    <div class="carousel-item" style="object-fit: cover; height: 400px;">
-                        <img src="https://www.payoo.vn/img/content/2020/11/201806_bannergame_opt2.png" class="d-block w-100"
-                            alt="Banner mua thẻ game giá rẻ" />
+                    <div class="carousel-item" style="object-fit: cover;">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtzWqKZod83ctXma3Apzc_QuT8bvJjzXEfHA&s"
+                            class="d-block w-100 h-100 img-fluid" alt="Banner mua thẻ game giá rẻ" />
                     </div>
-                    <div class="carousel-item active" style="object-fit: cover; height: 400px;">
-                        <img src="https://file.hstatic.net/200000855699/collection/pk_web_banner_d2917fe8964a49d8bd1c32a8e6e49e62.png" class="d-block w-100"
-                            alt="Banner mua thẻ game giá rẻ" />
+                    <div class="carousel-item active" style="object-fit: cover;">
+                        <img src="https://vtcpay.vn/media2/upload/images/news/web-banner-game-21-02-2024-09-05-39.jpg"
+                            class="img-fluid d-block w-100 h-100" alt="Banner mua thẻ game giá rẻ" />
                     </div>
-                    <div class="carousel-item" style="object-fit: cover; height: 400px;">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQydI4Lf9tHOpVFXgq1D3ag67c8q1DJrnzCBw&s" class="d-block w-100"
-                            alt="Banner mua thẻ game giá rẻ" />
+                    <div class="carousel-item" style="object-fit: cover;">
+                        <img src="https://www.payoo.vn/img/content/2020/11/201806_bannergame_opt2.png"
+                            class="d-block w-100 h-100 img-fluid" alt="Banner mua thẻ game giá rẻ" />
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#banner-1" data-bs-slide="prev">
@@ -44,34 +44,21 @@
                 </button>
             </div>
             <div class="row">
-                <div class="col-lg-8 col-md-12">
+                <div class="col-lg-8 col-md-12 col-12">
                     <!-- Loại thẻ -->
                     <div class="">
                         <h6 class="bg-gray-custom p-3 my-4 fw-bold">Chọn loại thẻ</h6>
-                        <div class="row row-cols-6 g-2" id="publisher-list">
-                            <!-- Zing Radio 1 -->
-                            <div class="col">
-                                <input type="radio" class="btn-check" name="loaithe" data-name="Zing" id="zing1"
-                                    autocomplete="off">
-                                <div style="heigth: 125px">
-                                    <label
-                                        class="btn btn-outline-primary p-1 d-flex align-items-center justify-content-center"
-                                        for="zing1">
-                                        <img src="https://napthengay.vn/media/images/ZING_01.png" alt="Zing"
-                                            width="123">
-                                </div>
+                        <div class="row g-2" id="publisher-list">
+                            <div th:each="publisher : ${publishers}" class="col-4 col-lg-2 custom-check">
+                                <!-- Publisher Radio -->
+                                <input type="radio" class="btn-check" th:name="loaithe" th:data-name="${publisher.name}"
+                                       th:id="${publisher.id}" autocomplete="off">
+                                <label class="btn btn-outline-primary p-1 d-flex align-items-center justify-content-center"
+                                       th:for="${publisher.id}" style="height: 80px">
+                                    <img th:src="${publisher.img}" th:alt="'thẻ game ' + ${publisher.name}" class="img-fluid">
                                 </label>
                             </div>
-                            <!-- Coin Radio 1 -->
-                            <div class="col">
-                                <input type="radio" class="btn-check" name="loaithe" data-name="V_COIN" id="coin1"
-                                    autocomplete="off">
-                                <label
-                                    class="btn btn-outline-primary p-1 d-flex align-items-center justify-content-center"
-                                    for="coin1">
-                                    <img src="https://napthengay.vn/media/images/V_COIN_01.png" alt="COIN" width="123">
-                                </label>
-                            </div>
+                           
                         </div>
 
                     </div>
@@ -79,11 +66,8 @@
                     <div class="">
                         <h6 class="bg-gray-custom p-3 my-4 fw-bold">Chọn mệnh giá và số lượng</h6>
 
-                        <div class="d-flex flex-wrap gap-2" id="menhgiabox">
+                        <div class="d-flex flex-wrap gap-md-2 gap-1" id="menhgiabox">
                             <!-- Radio Button 1 -->
-                            <div class="col">
-
-                            </div>
                             <input type="radio" class="btn-check" name="menhgia" id="button1" autocomplete="off">
                             <label class="btn btn-outline-primary text-dark p-2" for="button1"
                                 style="width: 132.6px; height: 72.5px;">
@@ -129,33 +113,42 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h6 class="bg-gray-custom p-3 my-4 fw-bold">Hình thức thanh toán</h6>
-                            <div class="d-flex g-md-3 gap-4">
+                            <div class="row row-cols-3 g-2">
                                 <!-- MoMo Option -->
-                                <input type="radio" class="btn-check" name="payment_method" data-name="Momo"
-                                    id="payment_momo" autocomplete="off">
-                                <label class="btn btn-light mb-2 d-flex flex-column border py-3" for="payment_momo">
-                                    <img src="https://static.ybox.vn/2022/4/4/1649334330094-anhybox%20(32).png"
-                                        alt="MoMo" width="130" height="75">
-                                    <h5 class="text-center w-100 fw-semibold pt-3 mb-0">MoMo</h5>
-                                </label>
+                                <div class="col">
+                                    <input type="radio" class="btn-check" name="payment_method" data-name="Momo"
+                                        id="payment_momo" autocomplete="off">
+                                    <label class="btn btn-light mb-2 d-flex flex-column align-items-center border py-3" for="payment_momo">
+                                        <img src="https://static.ybox.vn/2022/4/4/1649334330094-anhybox%20(32).png"
+                                            alt="MoMo" class="payment-img">
+                                        <h5 class="payment-tittle text-center w-100 fw-semibold pt-3 mb-0">MoMo</h5>
+                                    </label>
+                                </div>
+
 
                                 <!-- Ngân hàng Option -->
-                                <input type="radio" class="btn-check" name="payment_method" data-name="Ngân hàng"
-                                    id="payment_banking" autocomplete="off">
-                                <label class="btn btn-light mb-2 d-flex flex-column border py-3" for="payment_banking">
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOXWr7QoJrIQ2RcPXG4yTsYT7Qb9S3pVHJ4fDq_LCt49HVgtfXdGrcFpPyp8lMhC10aI0&usqp=CAU"
-                                        alt="Ngân hàng" width="130" height="75">
-                                    <h5 class="text-center w-100 fw-semibold pt-3 mb-0">Ngân hàng</h5>
-                                </label>
+                                <div class="col">
+                                    <input type="radio" class="btn-check" name="payment_method" data-name="Ngân hàng"
+                                        id="payment_banking" autocomplete="off">
+                                    <label class="btn btn-light mb-2 d-flex flex-column align-items-center border py-3"
+                                        for="payment_banking">
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOXWr7QoJrIQ2RcPXG4yTsYT7Qb9S3pVHJ4fDq_LCt49HVgtfXdGrcFpPyp8lMhC10aI0&usqp=CAU"
+                                            alt="Ngân hàng" class="payment-img">
+                                        <h5 class="payment-tittle text-center w-100 fw-semibold pt-3 mb-0">Ngân hàng</h5>
+                                    </label>
+                                </div>
 
                                 <!-- Card Option -->
-                                <input type="radio" class="btn-check" name="payment_method" id="payment_card"
-                                    data-name="Card" autocomplete="off">
-                                <label class="btn btn-light mb-2 d-flex flex-column border py-3" for="payment_card">
-                                    <img src="https://seoiclick.com/content/uploads/images/dong-tien-bang-the-cao-dien-thoai_636911758606085590.jpg"
-                                        alt="Card" width="130" height="75">
-                                    <h5 class="text-center w-100 fw-semibold pt-3 mb-0">Card</h5>
-                                </label>
+                                <div class="col">
+                                    <input type="radio" class="btn-check" name="payment_method" id="payment_card"
+                                        data-name="Card" autocomplete="off">
+                                    <label class="btn btn-light mb-2 d-flex flex-column align-items-center border py-3"
+                                        for="payment_card">
+                                        <img src="https://seoiclick.com/content/uploads/images/dong-tien-bang-the-cao-dien-thoai_636911758606085590.jpg"
+                                            alt="Card" class="payment-img">
+                                        <h5 class="payment-tittle text-center w-100 fw-semibold pt-3 mb-0">Card</h5>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -177,7 +170,7 @@
 
                 </div>
                 <!-- Chi tiết giao dịch -->
-                <div class="col-lg-4 col-md-12">
+                <div class="col-lg-4 col-md-12 col-12">
                     <h6 class="bg-gray-custom p-3 my-4 fw-bold">Chi tiết giao dịch</h6>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between">
@@ -258,7 +251,7 @@
                                     <!-- Hiển thị mã QR ở đây -->
                                     <div id="qrCode" class="w-75 mx-auto">
                                         <img src="https://play-lh.googleusercontent.com/9HT3x5ccHcOdhBgLVsNEE6uV9tsCy4GJkoQ8SiJid6xxdhoZnXtyIVhyFEBzoRvAjc4"
-                                            class="w-100" alt="QR Code">
+                                            class="w-100 img-fluid" alt="QR Code">
                                     </div>
                                     <br>
                                     <form action="/payment" method="POST">
@@ -324,23 +317,24 @@
 
             function renderPublisherList(publishers) {
                 const publisherListContainer = $("#publisher-list");
-                publisherListContainer.empty();
+                // publisherListContainer.empty();
 
                 // Lặp qua các nhà cung cấp và tạo HTML cho từng nhà cung cấp
                 publishers.forEach(function (publisher) {
                     const publisherMarkup = `
-                    <div class="col custom-check">
+                    
+                    <div class="col-4 col-lg-2 custom-check">
                         <!-- Publisher Radio -->
                         <input type="radio" class="btn-check" name="loaithe" data-name="${publisher.name}" id="${publisher.id}" autocomplete="off">
                         <label class="btn btn-outline-primary p-1 d-flex align-items-center justify-content-center" for="${publisher.id}" style="height: 80px">
 
-                                <img src="${publisher.img}" alt="${publisher.name}" width="123">
+                                <img src="${publisher.img}" alt="thẻ game ${publisher.name}"   class="img-fluid">
                         </label>
                     </div>
                 `;
 
                     // Thêm phần tử vào container
-                    publisherListContainer.append(publisherMarkup);
+                    // publisherListContainer.append(publisherMarkup);
                     $("input[name='loaithe']").trigger("click");
                 });
             }

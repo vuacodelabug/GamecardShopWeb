@@ -4,14 +4,17 @@
 <head>
     <!-- seo -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="GameCard - Trang web mua thẻ game online tiện lợi, giá rẻ, hỗ trợ nạp thẻ nhanh chóng với nhiều ưu đãi hấp dẫn.">
-    <meta name="keywords" content="thẻ game, mua thẻ game online, nạp thẻ game, thẻ Garena, thẻ Zing, thẻ Viettel, khuyến mãi thẻ game">
+    <meta name="description"
+        content="GameCard - Trang web mua thẻ game online tiện lợi, giá rẻ, hỗ trợ nạp thẻ nhanh chóng với nhiều ưu đãi hấp dẫn.">
+    <meta name="keywords"
+        content="thẻ game, mua thẻ game online, nạp thẻ game, thẻ Garena, thẻ Zing, thẻ Viettel, khuyến mãi thẻ game">
     <meta name="author" content="GameCard Team">
     <meta property="og:title" content="GameCard - Nền tảng mua thẻ game trực tuyến" />
-    <meta property="og:description" content="Mua thẻ game nhanh chóng và tiện lợi trên GameCard. Tìm hiểu thêm về chúng tôi qua trang điều khoản và hướng dẫn sử dụng." />
+    <meta property="og:description"
+        content="Mua thẻ game nhanh chóng và tiện lợi trên GameCard. Tìm hiểu thêm về chúng tôi qua trang điều khoản và hướng dẫn sử dụng." />
     <meta property="og:image" content="path-to-your-image/logo-og.png" />
     <meta property="og:url" content="https://yourwebsite.com" />
-    
+
     <title layout:title-pattern="$CONTENT_TITLE | $LAYOUT_TITLE">GameCard</title>
 
     <!-- font awesome -->
@@ -50,13 +53,42 @@
             /* Đảm bảo padding không bị ảnh hưởng */
         }
 
-        @media (max-width: 768px) {
-            #publisher-list {
-                justify-content: space-around;
+        /* Carousel */
+        #banner-1 .carousel-item {
+                height: 400px ;
             }
+
+            /* Ô thanh toán */
+            .payment-img {
+                width: 130px;
+                height: 70px;
+                margin: 2.5px;
+            }
+
+        @media (max-width: 768px) {
+            #banner-1 .carousel-item {
+                height: 150px ;
+            }
+
+            .payment-img {
+                width: 100px;
+                height: 50px;
+            }
+
+            .payment-tittle{
+                font-size: 14px;
+            }
+
+            /* #publisher-list {
+                justify-content: space-around;  // Căn giữa các phần tử Loại thẻ
+            } */
 
             #menhgiabox label {
                 width: 100%;
+            }
+
+            .carousel-item {
+                height: 250px;
             }
         }
     </style>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html layout:decorate="admin/index">
+<html layout:decorate="~{admin/index}">
 
 <head>
     <meta charset="UTF-8">
@@ -36,35 +36,37 @@
                     </div>
                 </form>
                 <!-- Bảng Danh Sách Thông tin cá nhân -->
-                <table class="table table-bordered table-nowrap">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Tên khách hàng</th>
-                            <th>Thẻ game</th>
-                            <th>Tổng tiền</th>
-                            <th>Ngày đặt hàng</th>
-                            <th>Trạng thái</th>
-                            <th>Hành động</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Lặp qua danh sách đơn hàng -->
-                        <tr th:each="order : ${orders}">
-                            <td th:text="${order.id}"></td>
-                            <td th:text="${order.customerName}"></td>
-                            <td th:text="${order.gameCard}"></td>
-                            <td th:text="${order.formattedTotalPrice}"></td>
-                            <td th:text="${order.orderDate}"></td>
-                            <td th:text="${order.status}"></td>
-                            <td>
-                                <button class="btn btn-sm btn-info btn-getOder" th:data-id="${order.id}">Chi
-                                    Tiết</button>
-                                <button class="btn btn-sm btn-danger">Hủy</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle table-striped table-bordered table-nowrap">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên khách hàng</th>
+                                <th>Thẻ game</th>
+                                <th>Tổng tiền</th>
+                                <th>Ngày đặt hàng</th>
+                                <th>Trạng thái</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Lặp qua danh sách đơn hàng -->
+                            <tr th:each="order : ${orders}">
+                                <td th:text="${order.id}"></td>
+                                <td th:text="${order.customerName}"></td>
+                                <td th:text="${order.gameCard}"></td>
+                                <td th:text="${order.formattedTotalPrice}"></td>
+                                <td th:text="${order.orderDate}"></td>
+                                <td th:text="${order.status}"></td>
+                                <td>
+                                    <button class="btn btn-sm btn-info btn-getOder" th:data-id="${order.id}">Chi
+                                        Tiết</button>
+                                    <button class="btn btn-sm btn-danger">Hủy</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div><!-- end card-body -->
         </div><!-- end card -->
         <div id="modal-detail" class="modal modal-lg fade" tabindex="-1" aria-labelledby="modal-detailLabel"

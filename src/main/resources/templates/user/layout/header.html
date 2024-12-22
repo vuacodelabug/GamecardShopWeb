@@ -12,8 +12,8 @@
 			<div class="logo">
 				<a href="/home">
 					<!-- seo -->
-					<img src="https://images-platform.99static.com//yMu615t0H7ZoE7NAZn48S48DZGY=/350x309:851x810/fit-in/590x590/99designs-contests-attachments/90/90852/attachment_90852898"
-						alt="GameCard - Nền tảng mua thẻ game trực tuyến uy tín" />
+					<!-- <img src="https://images-platform.99static.com//yMu615t0H7ZoE7NAZn48S48DZGY=/350x309:851x810/fit-in/590x590/99designs-contests-attachments/90/90852/attachment_90852898"
+						alt="GameCard - Nền tảng mua thẻ game trực tuyến uy tín" /> -->
 
 					<!-- <img src="logo.png" alt="Website Logo" /> -->
 					<h1 class="mb-0 text-white-75 fw-bold" style="font-size: 30px;">GameCard</h1>
@@ -37,7 +37,8 @@
 			<!-- Search Bar -->
 			<!-- seo Tối ưu placeholder  -->
 			<div class="search-bar pc-content">
-				<input class="w-100" type="text" placeholder="Tìm kiếm thẻ game, tin tức hoặc sự kiện trên GameCard..." />
+				<input class="w-100" type="text"
+					placeholder="Tìm kiếm thẻ game, tin tức hoặc sự kiện trên GameCard..." />
 			</div>
 
 			<div class="header-gaps pc-content"></div>
@@ -113,23 +114,21 @@
 
 			<!-- Menu Offcanvas -->
 			<div class="offcanvas offcanvas-end w-75 border-0" tabindex="-1" id="menuOffcanvas">
-				<!-- Giao diện trước khi đăng nhập -->
-				<div class="notlogged-content offcanvas-header pb-0">
-					<button type="button" class="btn btn-outline-danger fs-18 form-control" data-bs-toggle="modal"
-						data-bs-target="#registerModal">Đăng nhập</button>
-				</div>
-				<!-- /Giao diện trước khi đăng nhập -->
+
 
 
 				<!-- Giao diện sau khi đăng nhập -->
 				<div class="loggedin-content offcanvas-header offcanvas-header-custom">
 					<div class="d-flex justify-content-between align-items-center gap-3">
-						<img class="rounded-circle avatar-md border border-light border-4" alt="200x200"
+						<img sec:authorize="isAuthenticated()" class="rounded-circle avatar-md border border-light border-4" alt="Shop nạp thẻ game uy tín"
 							src="assets/images/users/user-dummy-img.jpg">
+						
+						<h1 sec:authorize="isAnonymous()" class="mb-0 text-white-75 fw-bold" style="font-size: 30px;">GameCard</h1>
 
-						<div class=" d-flex flex-column">
+
+						<div  sec:authorize="isAuthenticated()" class=" d-flex flex-column">
 							<h5 class="text-white-75 mb-1">Xin chào</h5>
-							<h3 class="text-white-75 fw-semibold mb-0">Mỹ Linh</h3>
+							<h3 class="text-white-75 fw-semibold mb-0" th:text="${session.user_name}"></h3>
 						</div>
 					</div>
 				</div>
@@ -138,51 +137,71 @@
 
 				<div id="mobile-menu-offcanvas" class="offcanvas-body">
 					<!-- Giao diện sau khi đăng nhập -->
-					<div class="offcanvas-menu loggedin-content">
-						<div class="offcanvas-menu-items">
-							<i class="las la-user-edit"></i>
-							<span>Thông tin người dùng</span>
+					<div sec:authorize="isAuthenticated()" class="offcanvas-menu loggedin-content">
+						<!-- Quyền admin -->
+						<div sec:authorize="hasAuthority('admin')" class="offcanvas-menu-items">
+							<a class="text-dark" href="/admin/dashboard"><i
+									class="mdi mdi-gauge"></i> 
+									<span>Quản trị</span>
+							</a>
 						</div>
+						<div class="offcanvas-menu-items">
+								<a href="/profile-auth" class="text-dark">
+									<i class="las la-user-edit"></i>
+									<span>Thông tin người dùng</span>
+								</a>
+						</div>
+						<hr>
 					</div>
 					<!-- /Giao diện sau khi đăng nhập -->
 
 					<div class="offcanvas-menu">
-						<!-- Offcanvas Menu Title -->
-						<div class="offcanvas-menu-title text-white-75">
-							Thanh điều hướng
-						</div>
 
-						<a href="">
-							<div class="offcanvas-menu-items">
+						<div class="offcanvas-menu-items">
+							<a href="/home" class="text-dark">
 								<i class="la la-home"></i>
 								<span>Trang chủ</span>
-							</div>
-						</a>
-
-						<div class="offcanvas-menu-items">
-							<i class="la la-info-circle"></i>
-							<span>Giới thiệu</span>
+							</a>
 						</div>
 
 						<div class="offcanvas-menu-items">
-							<i class="la la-book"></i>
-							<span>Điều khoản</span>
+							<a href="/about" class="text-dark">
+								<i class="la la-info-circle"></i>
+								<span>Giới thiệu</span>
+							</a>
 						</div>
 
 						<div class="offcanvas-menu-items">
-							<i class="la la-question-circle"></i>
-							<span>Hướng dẫn</span>
+							<a href="/policy" class="text-dark">
+								<i class="la la-book"></i>
+								<span>Điều khoản</span>
+							</a>
+						</div>
+
+						<div class="offcanvas-menu-items">
+							<a href="/guide" class="text-dark">
+								<i class="la la-question-circle"></i>
+								<span>Hướng dẫn</span>
+							</a>
 						</div>
 					</div>
 
 					<hr>
 
+					<!-- Giao diện trước khi đăng nhập -->
+					<div sec:authorize="isAnonymous()" class="notlogged-content offcanvas-header pb-0">
+						<button type="button" class="btn btn-outline-danger fs-18 form-control" data-bs-toggle="modal"
+							data-bs-target="#loginModal">Đăng nhập</button>
+					</div>
+					<!-- /Giao diện trước khi đăng nhập -->
+
 					<!-- Giao diện sau khi đăng nhập -->
 					<!-- Đăng xuất -->
-					<button type="button"
+					<a sec:authorize="isAuthenticated()" type="button" href="/logout"
 						class="mobile-content loggedin-content btn btn-outline-danger fs-18 form-control">Đăng
-						xuất</button>
+						xuất</a>
 					<!-- /Giao diện sau khi đăng nhập -->
+
 				</div>
 			</div>
 			<!-- /Mobile -->
