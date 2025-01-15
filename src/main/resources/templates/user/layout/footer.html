@@ -11,7 +11,7 @@
             <!-- Cột thông tin -->
             <div class="col-md-4 mb-3">
                 <h5 class="text-light">Về Chúng Tôi</h5>
-                <p>Nạp thẻ game trực tuyến, nhanh chóng và an toàn. Chúng tôi cung cấp các dịch vụ thẻ game uy tín hàng đầu tại Việt Nam.</p>
+                <p th:text="${session.description}"></p>
             </div>
 
 <!-- Cột liên kết nhanh -->
@@ -30,9 +30,9 @@
             <div class="col-md-4 mb-3">
                 <h5 class="text-light">Liên Hệ</h5>
                 <ul class="list-unstyled">
-                    <li><i class="fas fa-map-marker-alt"></i> 123 Đường ABC, TP.HCM</li>
-                    <li><i class="fas fa-phone"></i> +84 123 456 789</li>
-                    <li><i class="fas fa-envelope"></i> email@example.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> <span th:text="${session.address}"><span></li>
+                    <li><i class="fas fa-phone" ></i> <span th:text="${session.phoneNumber}"><span></li>
+                    <li><i class="fas fa-envelope"></i>  <span th:text="${session.email}"></span></li>
                 </ul>
             </div>
         </div>

@@ -20,20 +20,19 @@
 
             <div class="card-body">
                 <!-- Tìm kiếm -->
-                <form action="">
+                <form action="" method="get">
                     <div class="row my-4">
                         <div class="d-flex align-items-center justify-content-center gap-2">
-                            <!-- Trường Tìm Kiếm Văn Bản -->
-                            <input type="text" class="form-control form-control w-25" placeholder="Nhập tên hoặc ID">
-
-                            <!-- Trường Chọn -->
-                            <select class="form-select form-select w-auto">
-                                <option value="">Tất cả</option>
-                                <option value="1">Nhà phát hành 1</option>
-                                <option value="2">Nhà phát hành 2</option>
-                                <option value="3">Nhà phát hành 3</option>
+                           
+                            <!-- Trường Chọn Nhà Phát Hành -->
+                            <select class="form-select form-select w-auto" name="search_publisher">
+                                <option value="">Tất cả nhà phát hành</option>
+                                <th:block th:each="publisher : ${publishers}">
+                                    <option th:value="${publisher.id}" th:text="${publisher.name}" 
+                                            th:selected="${publisher.id == search_publisher}"></option>
+                                </th:block>
                             </select>
-
+                
                             <!-- Nút Tìm Kiếm -->
                             <button class="btn btn-primary">Tìm Kiếm</button>
                         </div>
@@ -165,7 +164,7 @@
                             <div class="mb-3">
                                 <label for="editValue" class="form-label ">Giá Trị<span
                                         class="text-danger">*</span></label>
-                                <input type="text" class="form-control format-number" id="editValue" value="100000"
+                                <input type="text" class="form-control" id="editValue" value="100000"
                                     required>
                             </div>
                             <div class="mb-3">

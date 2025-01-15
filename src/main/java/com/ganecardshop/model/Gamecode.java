@@ -87,7 +87,8 @@ public class Gamecode {
     }
 
     // Phương thức để cập nhật trạng thái khi gamecode được sử dụng
-    public void markAsUsed() {
+    public void markAsUsed(Order order) {
+        this.order = order;
         this.isUsed = 1;
         this.usedDate = LocalDateTime.now();
     }

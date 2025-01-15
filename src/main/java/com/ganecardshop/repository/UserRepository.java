@@ -15,6 +15,10 @@ import jakarta.transaction.Transactional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
+    // Đếm số khách hàng active
+    @Query("SELECT COUNT(u) FROM User u WHERE u.status = 1")
+    Integer countActiveUsers();
+    
     Optional<User> findByEmail(String email);
 
     Optional<User> findById(Integer id);

@@ -1,12 +1,12 @@
 package com.ganecardshop.service;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ganecardshop.dto.GamecodeDTO;
@@ -24,10 +24,10 @@ public class GamecodeService {
     @Autowired
     private GamecardRepository gamecardRepository;
 
-    public List<GamecodeDTO> getFilteredGamecode() {
-        List<Gamecode> gamecodes = gamecodeRepository.findAll();
-        return gamecodes.stream().sorted(Comparator.comparing(Gamecode::getCode)).map(this::convertToDTO)
-                .collect(Collectors.toList());
+    public Page<GamecodeDTO> findFilteredGamecodes(String search_gamecode, Integer search_publisher,
+            Integer search_gamecard, Integer search_isUsed, Pageable pageable) {
+        return gamecodeRepository.findFilteredGamecodes(search_gamecode, search_publisher, search_gamecard,
+                search_isUsed, pageable).map(this::convertToDTO);
     }
 
     public GamecodeDTO getGamecodeById(Integer id) {
@@ -64,7 +64,7 @@ public class GamecodeService {
 
     public List<String> createGamecode(GamecodeDTO gamecodeDTO) {
         List<String> duplicateCodes = new ArrayList<>(); // Danh sách lưu mã thẻ trùng
-    
+
         // Kiểm tra các mã thẻ trong danh sách có bị trùng không
         for (String code : gamecodeDTO.getListcode()) {
             try {
@@ -73,14 +73,14 @@ public class GamecodeService {
                 duplicateCodes.add(code); // Thêm mã thẻ trùng vào danh sách
             }
         }
-    
+
+        // Nếu không có mã thẻ trùng, tiếp tục tạo gamecode
         if (duplicateCodes.isEmpty()) {
-            // Nếu không có mã thẻ trùng, tiếp tục tạo gamecode
             Gamecard gamecard = gamecardRepository.findById(gamecodeDTO.getGameCardId())
                     .orElseThrow(() -> new RuntimeException("Gamecard not found"));
-    
+
             List<Gamecode> gamecodes = new ArrayList<>();
-    
+
             // Duyệt qua danh sách mã thẻ trong GamecodeDTO và tạo mới Gamecode
             for (String code : gamecodeDTO.getListcode()) {
                 Gamecode gamecode = new Gamecode();
@@ -88,14 +88,18 @@ public class GamecodeService {
                 gamecode.setGamecard(gamecard);
                 gamecodes.add(gamecode);
             }
-    
+
             // Lưu tất cả các gamecode vào cơ sở dữ liệu
             gamecodeRepository.saveAll(gamecodes);
+
+            // cập nhật số lượng thẻ game trong kho
+            gamecard.setStock(gamecard.getStock() + gamecodeDTO.getListcode().size());
+            gamecardRepository.save(gamecard);
+
         }
-    
-        return duplicateCodes; // Trả về danh sách mã thẻ trùng (nếu có)
+
+        return duplicateCodes;
     }
-    
 
     public void updateGamecode(GamecodeDTO gamecodeDTO) {
         Optional<Gamecode> existingGamecode = gamecodeRepository.findById(gamecodeDTO.getId());
@@ -119,5 +123,4 @@ public class GamecodeService {
     public void deleteGamecode(Integer id) {
         gamecodeRepository.deleteById(id);
     }
-
 }

@@ -30,10 +30,21 @@ public class GamecardService {
     @Autowired
     private GamecodeRepository gamecodeRepository;
 
-    public List<GamecardDTO> getFilteredGamecards() {
-        List<Gamecard> gamecards = gamecardRepository.getAllGameCart();
-        return gamecards.stream().map(this::convertToDTO).collect(Collectors.toList());
+    public List<GamecardDTO> getFilteredGamecards(Integer search_publisher) {
+        if (search_publisher != null) {
+            // Tìm theo nhà phát hành
+            return gamecardRepository.findByPublisherId(search_publisher)
+                                     .stream()
+                                     .map(this::convertToDTO)
+                                     .collect(Collectors.toList());
+        }
+        // Nếu không có tìm kiếm, trả về tất cả gamecards
+        return gamecardRepository.findAll()
+                                 .stream()
+                                 .map(this::convertToDTO)
+                                 .collect(Collectors.toList());
     }
+    
 
     public GamecardDTO getGamecardById(Integer id) {
         Gamecard gamecard = gamecardRepository.findById(id)
@@ -62,6 +73,7 @@ public class GamecardService {
                 discount != null ? discount.getId() : null,
                 gamecard.getStock());
     }
+
     // Phương thức tạo mã thẻ game mới (tự động sinh mã) cả chữ lẫn số
     private String generateNewCode() {
         String code = "";
@@ -86,9 +98,10 @@ public class GamecardService {
         // Lấy thông tin giảm giá (nếu có)
         Discount discount = null;
         if (gamecardDto.getDiscountId() != null) {
-            discount = discountRepository.findById(gamecardDto.getDiscountId()).orElse(null); // Không ném ngoại lệ, chỉ trả về null nếu không tìm thấy
+            discount = discountRepository.findById(gamecardDto.getDiscountId()).orElse(null); // Không ném ngoại lệ, chỉ
+                                                                                              // trả về null nếu không
+                                                                                              // tìm thấy
         }
-        
 
         // Tạo đối tượng Gamecard
         Gamecard gamecard = new Gamecard();
@@ -101,7 +114,7 @@ public class GamecardService {
         // Lưu vào cơ sở dữ liệu
         gamecardRepository.save(gamecard);
 
-          // Tạo Gamecode mới thẻ game vừa tạo
+        // Tạo Gamecode mới thẻ game vừa tạo
         for (int i = 0; i < gamecardDto.getStock(); i++) {
             Gamecode gamecode = new Gamecode();
             gamecode.setGamecard(gamecard);
@@ -121,7 +134,9 @@ public class GamecardService {
 
         Discount discount = null;
         if (gamecardDto.getDiscountId() != null) {
-            discount = discountRepository.findById(gamecardDto.getDiscountId()).orElse(null); // Không ném ngoại lệ, chỉ trả về null nếu không tìm thấy
+            discount = discountRepository.findById(gamecardDto.getDiscountId()).orElse(null); // Không ném ngoại lệ, chỉ
+                                                                                              // trả về null nếu không
+                                                                                              // tìm thấy
         }
 
         gamecard.setName(gamecardDto.getCardName());

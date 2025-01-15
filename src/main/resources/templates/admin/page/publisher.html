@@ -52,13 +52,20 @@
                                 <h5 th:text="${publisher.name}" class="card-title">Nhà phát hành A</h5>
                                 <p th:text="${publisher.description}" class="ctm-card-text">Mô tả về Nhà phát hành
                                     A.</p>
-                                <div class="d-flex justify-content-end gap-2">
-                                    <button class="btn btn-secondary editPublisherBtn" th:data-id="${publisher.id}">
-                                        Sửa
-                                    </button>
-                                    <button type="submit" th:data-id="${publisher.id}"
-                                        class="btn btn-danger btn-sm btn-deletePubisher">Xóa</button>
-                                </div>
+                                    <div class="d-flex justify-content-between gap-2">
+                                        <div>
+                                            <a th:href="@{game-card?search_publisher={publisherId}(publisherId=${publisher.id})}"
+                                            th:text="'Xem chi tiết'" class="text-decoration-underline">Xem thẻ game</a>
+                                         
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-sm btn-secondary editPublisherBtn" th:data-id="${publisher.id}">
+                                                Sửa
+                                            </button>
+                                            <button type="submit" th:data-id="${publisher.id}"
+                                                class="btn btn-danger btn-sm btn-deletePubisher">Xóa</button>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
                     </div>

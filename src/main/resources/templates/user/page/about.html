@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Giới thiệu GameCard</title>
+    <title>Giới thiệu <span th:text="${session.companyName}"><span></title>
 </head>
 
 <body>
@@ -31,8 +31,8 @@
                 </div>
                 
                 <div class="overlay-content top-50 w-100 text-center" style="transform: translateY(-50%);">
-                    <h1 class="text-white-75 fs-36">Giới Thiệu Về GameCard</h1>
-                    <h3 class="text-white-50">Địa chỉ uy tín cho thẻ nạp và sản phẩm game</h3>
+                    <h1 class="text-white-75 fs-36">Giới Thiệu Về <span th:text="${session.companyName}"><span></h1>
+                    <h3 class="text-white-50" th:text="${session.description}">Địa chỉ uy tín cho thẻ nạp và sản phẩm game</h3>
                 </div>
             </div>
         </div>
@@ -40,8 +40,8 @@
         <!-- Thông tin thương hiệu -->
         <section class="section">
             <div class="container fs-15">
-                <h3 class="ff-secondary fw-bold">THÔNG TIN THƯƠNG HIỆU GAMECARD</h3>
-                <p>Chào mừng bạn đến với <strong>GameCard</strong>, nền tảng hàng đầu chuyên
+                <h3 class="ff-secondary fw-bold">THÔNG TIN THƯƠNG HIỆU <span th:text="${session.companyName}"><span></h3>
+                <p>Chào mừng bạn đến với <strong><span th:text="${session.companyName}"><span></strong>, nền tảng hàng đầu chuyên
                     cung cấp các loại thẻ nạp game uy tín và chất lượng tại <strong>Việt Nam</strong>. Chính thức hoạt
                     động từ ngày <strong>06/01/2020</strong> chúng tôi luôn tự hào đồng
                     hành cùng cộng đồng game thủ, mang đến những sản phẩm thẻ nạp tốt nhất với giá cả hợp lý và dịch vụ
@@ -68,18 +68,17 @@
                 <!-- Sứ mệnh và tầm nhìn -->
                 <h3 class="ff-secondary fw-bold">Sứ Mệnh Và Tầm Nhìn</h3>
 
-                <p class="mb-1"><strong>Sứ mệnh:</strong> GameCard mong muốn trở thành cầu nối vững chắc giữa các game
-                    thủ
-                    và thế giới game,
-                    cung cấp mọi thứ họ cần để thỏa mãn đam mê.</p>
-                <p><strong>Tầm nhìn:</strong> Đến năm 2025, GameCard đặt mục tiêu trở thành nền tảng cung cấp thẻ game
-                    và
-                    phụ
-                    kiện công nghệ lớn nhất Đông Nam Á.</p>
-
+                <p class="mb-1">
+                    <strong>Sứ mệnh:</strong> 
+                    <span th:text="${session.companyName}"></span> mong muốn trở thành cầu nối vững chắc giữa các game thủ và thế giới game, cung cấp mọi thứ họ cần để thỏa mãn đam mê.
+                </p>
+                <p>
+                    <strong>Tầm nhìn:</strong> 
+                    Đến năm 2025, <span th:text="${session.companyName}"></span> đặt mục tiêu trở thành nền tảng cung cấp thẻ game và phụ kiện công nghệ lớn nhất Đông Nam Á.
+                </p>
                 <br>
 
-                <!--  Lý do nên chọn GameCard   -->
+                <!--  Lý do nên chọn <span th:text="${session.companyName}"><span>   -->
                 <h3 class="ff-secondary fw-bold">Dịch vụ chăm sóc khách hàng vượt trội:</h3>
                 <ol>
                     <li><strong>Hệ thống tự động:</strong> Nhận thẻ ngay sau khi thanh toán chỉ trong 30 giây.</li>

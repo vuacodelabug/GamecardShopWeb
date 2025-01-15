@@ -23,7 +23,7 @@ public class GamecardDTO {
         this.cardName = cardName;
         this.price = price;
         this.formattedPrice = formatCurrency(price);
-        this.discountName = discountName != null ? discountName : "Chưa có mgg";
+        this.discountName = discountName != null ? discountName : "Chưa có khuyến mãi";
         this.stock = stock;
         this.publisherId = publisherId;
         this.discountId = discountId != null ? discountId : 0;

@@ -14,12 +14,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ganecardshop.dto.OrderForm;
 import com.ganecardshop.model.Publisher;
+import com.ganecardshop.model.WebsiteInfo;
 import com.ganecardshop.repository.UserRepository;
 import com.ganecardshop.service.GamecardService;
 import com.ganecardshop.service.OrderService;
 import com.ganecardshop.service.PublisherService;
+import com.ganecardshop.service.WebsiteInfoService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
@@ -35,10 +38,25 @@ public class HomeController {
 	@Autowired
 	OrderService orderService;
 
+	@Autowired
+	WebsiteInfoService companyService;
+
 	@GetMapping({ "/", "/home" })
-	public String getHome(Model model) {
+	public String getHome(Model model, HttpSession session) {
 		List<Publisher> getListPublishers = publisherService.getAllPublishers();
 		model.addAttribute("publishers", getListPublishers);
+
+		 // Kiểm tra xem "companyName" đã có trong session chưa
+            // Lấy thông tin từ service và lưu vào session
+            WebsiteInfo websiteInfo = companyService.getWebsiteInfo();
+
+            session.setAttribute("companyName", websiteInfo.getCompanyName());
+            session.setAttribute("bannerImageUrl", websiteInfo.getBannerImageUrl());
+            session.setAttribute("description", websiteInfo.getDescription());
+            session.setAttribute("phoneNumber", websiteInfo.getPhoneNumber());
+            session.setAttribute("email", websiteInfo.getEmail());
+            session.setAttribute("address", websiteInfo.getAddress());
+
 		return "user/page/home";
 	}
 

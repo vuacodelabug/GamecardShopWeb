@@ -35,6 +35,9 @@ public class OrderService {
     private GamecardRepository gamecardRepository;
 
     @Autowired
+    private EmailService emailService;
+
+    @Autowired
     private UserRepository userRepository;
 
     public List<Order> getAllOrders() {
@@ -160,12 +163,16 @@ public class OrderService {
 
         orderRepository.save(order);
         // Trong trường hợp đủ thẻ game, tìm và lấy ra số lượng thẻ game cần mua
+        StringBuilder gameCodes = new StringBuilder();
         for (int i = 0; i < orderForm.getQuantity(); i++) {
             // Fetch an unused game code based on the gamecardId
             Gamecode gamecode = gamecodeRepository.findFirstByGamecardIdAndIsUsedFalse(gamecard.getId())
                     .orElseThrow(() -> new IllegalArgumentException("Lỗi mã thẻ game!"));
-            gamecode.markAsUsed();
+            gamecode.markAsUsed(order);
             gamecodeRepository.save(gamecode);
+
+            // Thêm mã game vào danh sách
+            gameCodes.append(gamecode.getCode()).append("\n");
         }
 
         // Cập nhật số lượng thẻ game trong kho
@@ -175,7 +182,12 @@ public class OrderService {
         // đơn hàng thành công
         order.setStatus(2);
         orderRepository.save(order);
-        
+
+        // Gửi email với mã game đã được tạo
+        String subject = "Mã thẻ game của bạn từ GaneCardShop";
+        // gửi nhà cung cấp, thẻ game, số lượng, giá tiền
+        String body = "Cảm ơn bạn đã mua thẻ game. Dưới đây là mã thẻ game của bạn:\n" + gameCodes.toString();
+        emailService.sendSimpleEmail(orderForm.getEmail(), subject, body);
 
         return "redirect:/home";
     }

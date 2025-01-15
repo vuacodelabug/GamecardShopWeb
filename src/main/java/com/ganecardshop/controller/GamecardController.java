@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ganecardshop.dto.GamecardDTO;
@@ -31,13 +32,21 @@ public class GamecardController {
     private DiscountService discountService;
 
     @GetMapping
-    public String getAllGamecards(Model model) {
-        model.addAttribute("publishers", publisherService.getAllPublishers()); // Chỉ lấy các publisher hợp lệ
-        model.addAttribute("discounts", discountService.getAllStatusActive()); // Chỉ lấy các discount hợp lệ
-        List<GamecardDTO> gamecards = gamecardService.getFilteredGamecards();
-        model.addAttribute("gamecards", gamecards);
-        return "admin/page/game-card";
-    }
+public String getAllGamecards(
+        @RequestParam(value = "search_publisher", required = false) Integer search_publisher,
+        Model model) {
+
+    // Truyền danh sách nhà phát hành vào model
+    model.addAttribute("publishers", publisherService.getAllPublishers());
+    model.addAttribute("discounts", discountService.getAllDiscounts());
+
+    // Tìm các thẻ game theo điều kiện tìm kiếm
+    List<GamecardDTO> gamecards = gamecardService.getFilteredGamecards(search_publisher);
+    model.addAttribute("gamecards", gamecards);
+    model.addAttribute("search_publisher", search_publisher);
+
+    return "admin/page/game-card";
+}
 
     @PostMapping("/create")
     @ResponseBody
